@@ -24,7 +24,9 @@ $('form[name="newPlayer"]').submit(function() {
             // Do what you will with 'person' now...
         });
     });
-    
+
+playerArray.push(player1);
+     
 players.onclick = function(){
     alert(playerArray.length);    
 };
