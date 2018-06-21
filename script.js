@@ -30,7 +30,7 @@ sbmt.onclick = function(){
 document.getElementById("newPlayer").value = new Player(this.value);
 };
 */
-sbmt.onsubmit = function(){
+playerForm.onsubmit = function(){
     playerArray.push(window[$('form[name="newPlayer"]').value] = new Player());
     
 };
