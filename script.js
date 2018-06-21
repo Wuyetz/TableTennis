@@ -22,10 +22,11 @@ $(function () {
 $('form[name="newPlayer"]').submit(function() {
             var player1 = $(this.name).serializeArray();
             // Do what you will with 'person' now...
+            playerArray.push(player1);
         });
     });
 
-playerArray.push(player1);
+
      
 players.onclick = function(){
     alert(playerArray.length);    
