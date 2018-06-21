@@ -20,7 +20,7 @@ var playerArray = [];
 $(function () {
         
 $('form[name="newPlayer"]').submit(function() {
-            var player1 = $(this.name).serializeArray();
+            var player1 = $(this).serializeArray();
             // Do what you will with 'person' now...
             playerArray.push(player1);
         });
