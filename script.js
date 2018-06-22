@@ -1,44 +1,54 @@
-window.onload = function () {
+window.onload = function(){
+    
+    $("#selectA").toggle();
+    $("#selectB").toggle();
+    
 
-function Player (name){
-    this.name = name;
+const name = document.getElementById('name');
+const submit = document.getElementById('submit');
+const selectA = document.getElementById('selectA');
+const selectB = document.getElementById('selectB');
+
+const players = [];
+
+class Player {
+    constructor(n, w, l) {
+      this.name = n;
+      this.wins = w;
+      this.losses = l;
+    }
 }
 
-var playerArray = [];
-
-//var value=$('#newPlayer').val();
-
-//var obj = JSON.parse(value);
-/*
-$(function () {
-        $('form[name="newPlayer"]').submit(function() {
-            var player1 = $(this.name).serializeArray();
-            playerArray.push(player1);
-            // Do what you will with 'person' now...
-        });
-    });
-*/
-/*
-var player1 = {};
-formData.forEach(function(value, key){
-    object[key] = value;
+submit.addEventListener('click', function() {
+  const player = new Player(name.value, 0, 0);
+  players.push(player);
+  document.getElementById("name").value = '';
 });
-var json = JSON.stringify(player1);
-*/
-/*
-sbmt.onclick = function(){
-document.getElementById("newPlayer").value = new Player(this.value);
-};
-*/
-playerForm.onsubmit = function(){
-    playerArray.push(window[$('form[name="newPlayer"]').value] = new Player());
-    
-};
-//window[variableName] = new Player();
 
-players.onclick = function(){
-  //  playerArray.push(player1);
-    alert(playerArray.length);    
+match.onclick = function(){
+    $("#selectA").toggle();
+    $("#match").toggle();
 };
+
+
+
+
+
+$('#selectA').on('mouseenter', function (e) {
+    $('#selectA')
+    .empty();
+    
+    players.forEach(function(item){
+var option = document.createElement('option');
+option.value = item.name;
+option.innerHTML = item.name;
+selectA.appendChild(option);
+});
+});
+    
+
+};
+
+
     
 };
