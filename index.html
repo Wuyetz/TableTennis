@@ -4,23 +4,44 @@
 		<title>Page Title</title>
 	</head>
 	<body>
-	
+	<form id="newPlayer">
 	Add new player: <input type="text" id="name">
-   <!-- Surname <input type="text" id="surname"><br>-->
-
-<button id="submit">Submit</button><br>
+  <!--  <input type="submit" value="Submit" id="submitPlayer">-->
+    <button id="submit">Submit</button><br>
+</form>
 <hr>
 
 
-<!--<button id="check">Players</button>-->
 
-<button id="match">Add new match</button>
-<select id="selectA">
-    <option selected="">Please select</option> 
-</select>
-<select id="selectB">
-    
-</select>
+<button id="match">Add new match</button><hr>
+
+
+<form id="matchResults">
+ Player A:<select id="selectA">
+            <option selected="">Please select</option> 
+          </select>
+ Player B:<select id="selectB">
+            <option selected="">Please select</option> 
+          </select><br>
+  
+  
+  1. Set: <input type="number" name="a1"><input type="number" name="b1"><br>
+  2. Set: <input type="number" name="a2"><input type="number" name="b2"><br>
+  3. Set: <input type="number" name="a3"><input type="number" name="b3"><br>
+  4. Set: <input type="number" name="a4"><input type="number" name="b4"><br>
+  5. Set: <input type="number" name="a5"><input type="number" name="b5"><br>
+  <input type="submit" value="Submit">
+</form>
+
+<button id="tableButton">Generate table</button>
+<table id="playerTable" border="1">
+            <tr>
+                <td id="Tn">Player</td>
+                <td id="Tw">Won</td>
+                <td id="Tl">Lost</td>
+            </tr>
+
+        </table>
 
 	<script src="https://code.jquery.com/jquery-3.1.1.js"></script> 	
 	</body>
