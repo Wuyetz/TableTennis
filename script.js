@@ -1,8 +1,9 @@
 window.onload = function(){
     
-    $("#selectA").toggle();
-    $("#selectB").toggle();
-    
+    $("#matchResults").toggle();
+
+
+
 
 const name = document.getElementById('name');
 const submit = document.getElementById('submit');
@@ -26,10 +27,8 @@ submit.addEventListener('click', function() {
 });
 
 match.onclick = function(){
-    $("#selectA").toggle();
-    $("#match").toggle();
+    $("#matchResults").toggle();
 };
-
 
 
 
@@ -47,5 +46,5 @@ selectA.appendChild(option);
 });
     
 
+    
 };
-
