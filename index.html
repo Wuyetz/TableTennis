@@ -2,29 +2,57 @@
 <html>
 	<head>
 		<title>Page Title</title>
+		
+		<style>
+            select
+            {
+                width:150px;
+            }
+            input
+            {
+                width:200px;
+            }
+            #submitMatch
+            {
+                width:100px;
+            }
+        
+        </style>
 	</head>
 	<body>
-	<form id="newPlayer">
-	Add new player: <input type="text" id="name">
+<!--	<form id="newPlayer">-->
+	Add new player: <input type="text" id="playerName">
   <!--  <input type="submit" value="Submit" id="submitPlayer">-->
-    <button id="submit">Submit</button><br>
-</form>
+    <button id="submitPlayer">Submit</button><br>
+<!--</form>-->
 <hr>
 
 
-
+<!--
 <button id="match">Add new match</button><hr>
-
+-->
 
 <form id="matchResults">
- Player A:<select id="selectA">
+    Player A:<select id="selectA">
             <option selected="">Please select</option> 
           </select>
- Player B:<select id="selectB">
+    Player B:<select id="selectB">
+            <option selected="">Please select</option> 
+          </select>
+    <p id="morePlayers"></p>
+    1. Set: <input type="number" name="a1"><input type="number" name="b1"><br>
+    2. Set: <input type="number" name="a2"><input type="number" name="b2"><br>
+    3. Set: <input type="number" name="a3"><input type="number" name="b3"><br>
+    4. Set: <input type="number" name="a4"><input type="number" name="b4"><br>
+    5. Set: <input type="number" name="a5"><input type="number" name="b5"><br>
+     <input type="submit" value="Submit" id="submitMatch"><br>
+</form>         
+ 
+<!-- Player B:<select id="selectB">
             <option selected="">Please select</option> 
           </select><br>
-  
-  
+  -->
+<!--  
   1. Set: <input type="number" name="a1"><input type="number" name="b1"><br>
   2. Set: <input type="number" name="a2"><input type="number" name="b2"><br>
   3. Set: <input type="number" name="a3"><input type="number" name="b3"><br>
@@ -42,7 +70,9 @@
             </tr>
 
         </table>
-
+-->
+    <p id="matches"></p>
+    
 	<script src="https://code.jquery.com/jquery-3.1.1.js"></script> 	
 	</body>
 </html>
