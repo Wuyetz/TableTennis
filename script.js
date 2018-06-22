@@ -1,32 +1,51 @@
-﻿window.onload = function () {
-
-
-function Player (name){
+window.onload = function(){
     
-this.name = name;
+    $("#selectA").toggle();
+    $("#selectB").toggle();
+    
 
+const name = document.getElementById('name');
+const submit = document.getElementById('submit');
+const selectA = document.getElementById('selectA');
+const selectB = document.getElementById('selectB');
+
+const players = [];
+
+class Player {
+    constructor(n, w, l) {
+      this.name = n;
+      this.wins = w;
+      this.losses = l;
+    }
 }
 
+submit.addEventListener('click', function() {
+  const player = new Player(name.value, 0, 0);
+  players.push(player);
+  document.getElementById("name").value = '';
+});
 
-var playerArray = [];
-
-
-//var value=$('#newPlayer').val();
-
-
-//var obj = JSON.parse(value);
-
-
-$(function () {
-        
-$('form[name="newPlayer"]').submit(function() {
-            var player1 = $(this.name).serializeArray();
-            // Do what you will with 'person' now...
-        });
-    });
-    
-players.onclick = function(){
-    alert(playerArray.length);    
+match.onclick = function(){
+    $("#selectA").toggle();
+    $("#match").toggle();
 };
+
+
+
+
+
+$('#selectA').on('mouseenter', function (e) {
+    $('#selectA')
+    .empty();
     
+    players.forEach(function(item){
+var option = document.createElement('option');
+option.value = item.name;
+option.innerHTML = item.name;
+selectA.appendChild(option);
+});
+});
+    
+
 };
+
