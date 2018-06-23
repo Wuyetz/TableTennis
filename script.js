@@ -58,6 +58,7 @@ $(document).on('change' , '.sets' , '.playerSelect', function(){
     var p3 = document.getElementById("p3");
     var p4 = document.getElementById("p4");
     var p5 = document.getElementById("p5");
+    var winner = document.getElementById("winner");
     
     var ws = " wins this set!";
     
@@ -129,7 +130,14 @@ if(selectA.value!==""&&selectB.value!=="")
     }
     
 if((aPoints>2||bPoints>2)&&(((aPoints-bPoints)<4)||((bPoints-aPoints)<4))&&(selectA.value!==selectB.value)){
-    alert("wooooooo");
+    document.getElementById("submitMatch").disabled = false;
+    if(aPoints>bPoints){
+        winner.innerHTML = selectA.value+" wins this match! Submit it and add another one.";
+    }else{
+        winner.innerHTML = selectB.value+" wins this match! Submit it and add another one.";
+    }
+}else{
+    winner.innerHTML ="";  
 }
 }});
 
