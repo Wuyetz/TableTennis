@@ -17,6 +17,9 @@
             {
                 width:100px;
             }
+            #winner {
+                font-weight: bold;
+            }
         
         </style>
 	</head>
@@ -33,12 +36,12 @@
 <button id="match">Add new match</button><hr>
 -->
 
-<form id="matchResult">
-    Player A:<select id="selectA" class="playerSelect">
+New match: <br><br><form id="matchResult">
+    Player A: <select id="selectA" class="playerSelect">
             <option value=''>Select ...</option>
 <!--            <option selected="">Please select</option> -->
           </select>
-    Player B:<select id="selectB" class="playerSelect">
+    Player B: <select id="selectB" class="playerSelect">
             <option value=''>Select ...</option>
 <!--            <option selected="">Please select</option> -->
           </select>
@@ -58,6 +61,7 @@
     5. Set: <input type="number" name="a5" class="sets" value="0">
             <input type="number" name="b5" class="sets" value="0">
             <p id="p5"></p><br>
+            <p id="winner"></p>
      <input type="submit" value="Submit" id="submitMatch"><br>
 </form>       
  
