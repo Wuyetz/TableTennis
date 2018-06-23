@@ -16,9 +16,9 @@ const a1 = document.getElementById("a1");
 
 
 const players = [];
-const matches = [];
 
-document.getElementById("matches").innerHTML = matches.join("<br>");
+
+
 
 class Player {
     constructor(n, w, l) {
@@ -83,13 +83,61 @@ $(document).on('change' , '.sets', function(){
     var p3 = document.getElementById("p3");
     var p4 = document.getElementById("p4");
     var p5 = document.getElementById("p5");
-
-    if(((a1-b1)>1||(b1-a1)>1)&&(a1>10||b1>10)){p1.innerHTML ="woooo";}
-    if(((a2-b2)>1||(b2-a2)>1)&&(a2>10||b2>10)){p2.innerHTML ="woooo";}
-    if(((a3-b3)>1||(b3-a3)>1)&&(a3>10||b3>10)){p3.innerHTML ="woooo";}
-    if(((a4-b4)>1||(b4-a4)>1)&&(a4>10||b4>10)){p4.innerHTML ="woooo";}
-    if(((a5-b5)>1||(b5-a5)>1)&&(a5>10||b5>10)){p5.innerHTML ="woooo";}
     
+    var ws = " wins this set!";
+
+if(selectA.value!==""&&selectB.value!=="")
+    {
+    if(((a1-b1)>1||(b1-a1)>1)&&(a1>10||b1>10)){
+        if(a1>b1){
+            p1.innerHTML = selectA.value+ws;
+        }else{
+            p1.innerHTML = selectB.value+ws;
+        }
+    }else{
+        p1.innerHTML ="";
+    }
+    
+    if(((a2-b2)>1||(b2-a2)>1)&&(a2>10||b2>10)){
+        if(a2>b2){
+            p2.innerHTML = selectA.value+ws;
+        }else{
+            p2.innerHTML = selectB.value+ws;
+        }
+    }else{
+        p2.innerHTML ="";    
+    }
+    
+    if(((a3-b3)>1||(b3-a3)>1)&&(a3>10||b3>10)){
+        if(a3>b3){
+            p3.innerHTML = selectA.value+ws;
+        }else{
+            p3.innerHTML = selectB.value+ws;
+        }
+    }else{
+        p3.innerHTML ="";    
+    }
+    
+    if(((a4-b4)>1||(b4-a4)>1)&&(a4>10||b4>10)){
+        if(a4>b4){
+            p4.innerHTML = selectA.value+ws;
+        }else{
+            p4.innerHTML = selectB.value+ws;
+        }
+    }else{
+        p4.innerHTML ="";    
+    }
+    
+    if(((a5-b5)>1||(b5-a5)>1)&&(a5>10||b5>10)){
+        if(a5>b5){
+            p5.innerHTML = selectA.value+ws;
+        }else{
+            p5.innerHTML = selectB.value+ws;
+        }
+    }else{
+        p5.innerHTML ="";    
+    }
+    }
     
 //    setResult(x,y,p1);      
     
@@ -215,7 +263,7 @@ $(".one").on("change", function (e) {
 
 
 //$(document).ready(function() { 
-$("#selectA").on("mouseenter", function (e) {
+$("#selectA").on("focus", function (e) {
     $('#selectA')
     .empty();
     if(players.length<2){
@@ -229,13 +277,15 @@ selectA.appendChild(option);
 });
 });
 
-$(".playerSelect").on("blur", function (e) {
+
+$("#selectA").on("blur", function (e) {
     
 
     if(selectA.value===selectB.value){alert("womp womp")}
 });
 
-$("#selectB").on("mouseenter", function (e) {
+
+$("#selectB").on("focus", function (e) {
     $('#selectB')
     .empty();
     players.forEach(function(item){
@@ -247,6 +297,21 @@ selectB.appendChild(option);
 });
 
 
+$("#playerList").on("click", function (e) {
+    var str = "";
+    for(i=0;i<players.length;i++){
+        str+="Rank: "+(i+1)+"  Name: "+players[i].name+"  Wins: "+players[i].wins+"  Losses: "+players[i].losses+"<hr>";
+        document.getElementById("rankings").innerHTML = str;
+    }
+});
 
-    
+$("#test").on("click", function (e) {
+    alert(typeof(selectA.value));
+    alert(selectA.value);
+});
+
+
+
+
+
 };
