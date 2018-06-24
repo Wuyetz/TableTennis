@@ -29,6 +29,7 @@
   <!--  <input type="submit" value="Submit" id="submitPlayer">-->
     <button id="submitPlayer">Submit</button><br>
     <p id="duplicateNames"></p><br>
+    <p id="morePlayers"></p>
 <!--</form>-->
 <hr>
 
@@ -37,7 +38,7 @@
 <button id="match">Add new match</button><hr>
 -->
 
-New match: <br><br><form id="matchResult">
+Add new match- pick two players and enter their points: <br><br><form id="matchResult">
     Player A: <select id="selectA" class="sets">
             <option value=''>Select ...</option>
 <!--            <option selected="">Please select</option> -->
@@ -45,8 +46,8 @@ New match: <br><br><form id="matchResult">
     Player B: <select id="selectB" class="sets">
             <option value=''>Select ...</option>
 <!--            <option selected="">Please select</option> -->
-          </select>
-    <p id="morePlayers"></p>
+          </select><br>
+    
     1. Set: <input type="number" name="a1" class="sets" value="0">
             <input type="number" name="b1" class="sets" value="0">
             <p id="p1"></p><br>
@@ -70,13 +71,14 @@ New match: <br><br><form id="matchResult">
 
 
 Past match overview: <br><form id="pastMatch">
-    Player A: <select id="pastA" class="sets">
+    Player A: <select id="pastA" class="past">
             <option value=''>Select ...</option>
 <!--            <option selected="">Please select</option> -->
           </select>
-    Player B: <select id="pastB" class="sets">
+    Player B: <select id="pastB" class="past">
             <option value=''>Select ...</option>
-          </select>    
+          </select>  
+            <button id="See matches">Submit></button><br>
 </form>
  
 <!-- Player B:<select id="selectB">
