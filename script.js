@@ -304,7 +304,39 @@ $("#playerList").on("click", function (e) {
     }
 });
 
+
+function compareWins(p1,p2) {
+  if (p1.wins < p2.wins)
+     return 3;
+  if (p1.wins > p2.wins)
+    return -3;
+  return 0;
+}
+
+function compareDiff(p1,p2) {
+    if (p1.wins === p2.wins){
+        if (p1.diff < p2.diff)
+     return 1;
+  if (p1.diff > p2.diff)
+    return -1;
+  return 0; 
+    }
+}
+
+
+
+
 $("#playerRankings").on("click", function (e) {
+
+    for(g=0;g<players.length;g++){
+        players[g].diff = players[g].wins - players[g].losses
+    };
+    players.sort(function(a, b) {
+    var textA = a.name.toUpperCase();
+    var textB = b.name.toUpperCase();
+    return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+});
+    
     if(rankings.innerHTML === ""){
         var str = "";
     for(i=0;i<players.length;i++){
