@@ -3,29 +3,73 @@
 	<head>
 		<title>Page Title</title>
 		<script src="script.js" type="text/javascript"></script>
+		
+		<style>
+            select
+            {
+                width:150px;
+            }
+            input
+            {
+                width:200px;
+            }
+            #submitMatch
+            {
+                width:100px;
+            }
+            #winner {
+                font-weight: bold;
+            }
+        
+        </style>
 	</head>
 	<body>
-	<form id="newPlayer">
-	Add new player: <input type="text" id="name">
+<!--	<form id="newPlayer">-->
+	Add new player: <input type="text" id="playerName">
   <!--  <input type="submit" value="Submit" id="submitPlayer">-->
-    <button id="submit">Submit</button><br>
-</form>
+    <button id="submitPlayer">Submit</button><br>
+<!--</form>-->
 <hr>
 
 
-
+<!--
 <button id="match">Add new match</button><hr>
+-->
 
-
-<form id="matchResults">
- Player A:<select id="selectA">
-            <option selected="">Please select</option> 
+New match: <br><br><form id="matchResult">
+    Player A: <select id="selectA" class="playerSelect">
+            <option value=''>Select ...</option>
+<!--            <option selected="">Please select</option> -->
           </select>
- Player B:<select id="selectB">
+    Player B: <select id="selectB" class="playerSelect">
+            <option value=''>Select ...</option>
+<!--            <option selected="">Please select</option> -->
+          </select>
+    <p id="morePlayers"></p>
+    1. Set: <input type="number" name="a1" class="sets" value="0">
+            <input type="number" name="b1" class="sets" value="0">
+            <p id="p1"></p><br>
+    2. Set: <input type="number" name="a2" class="sets" value="0">
+            <input type="number" name="b2" class="sets" value="0">
+            <p id="p2"></p><br>
+    3. Set: <input type="number" name="a3" class="sets" value="0">
+            <input type="number" name="b3" class="sets" value="0">
+            <p id="p3"></p><br>
+    4. Set: <input type="number" name="a4" class="sets" value="0">
+            <input type="number" name="b4" class="sets" value="0">
+            <p id="p4"></p><br>
+    5. Set: <input type="number" name="a5" class="sets" value="0">
+            <input type="number" name="b5" class="sets" value="0">
+            <p id="p5"></p><br>
+            <p id="winner"></p>
+     <input type="submit" value="Submit" id="submitMatch"><br>
+</form>       
+ 
+<!-- Player B:<select id="selectB">
             <option selected="">Please select</option> 
           </select><br>
-  
-  
+  -->
+<!--  
   1. Set: <input type="number" name="a1"><input type="number" name="b1"><br>
   2. Set: <input type="number" name="a2"><input type="number" name="b2"><br>
   3. Set: <input type="number" name="a3"><input type="number" name="b3"><br>
@@ -43,7 +87,21 @@
             </tr>
 
         </table>
+-->
 
-	<script src="https://code.jquery.com/jquery-3.1.1.js"></script> 	
+
+
+    <button id="matchesList">Match history</button>
+    <p id="matches"></p>
+    
+    <button id="playerList">Players rankings</button>
+    <p id="rankings"></p>
+    
+    <button id="test">test</button>
+    <p id="tp"></p>
+    
+	<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/additional-methods.min.js"></script>
 	</body>
 </html>
