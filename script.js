@@ -7,7 +7,7 @@ const selectA = document.getElementById('selectA');
 const selectB = document.getElementById('selectB');
 const submitMatch = document.getElementById("submitMatch");
 //const matchResult = document.getElementById("matchResult");
-const a1 = document.getElementById("a1");
+
 
 
 
