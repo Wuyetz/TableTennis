@@ -25,6 +25,7 @@ var duplicateNames = document.getElementById("duplicateNames");
 
 var players = [];
 var matches = [];
+var pastMatches = [];
 
 document.getElementById("submitMatch").disabled = true;
 
@@ -35,12 +36,12 @@ function Player (n, w, l) {
       this.losses = l;
 }
 
-function Match (p1, p2, r, s) {
-      this.player1 = p1;
-      this.player2 = p2;
+function Match (pA, pB, r, stA, stB) {
+      this.nameA = pA;
+      this.nameB = pB;
       this.result = r;
-      this.sets1 = st1;
-      this.sets2 = st2;
+      this.setsA = stA;
+      this.setsB = stB;
 }
 
 // all good
@@ -288,12 +289,32 @@ $("#submitMatch").click(function(e) {
             }
             
         }
+        
+    
+
+    var selA = $("#selectA option:selected").text();
+    var selB = $("#selectB option:selected").text();
+    var res = String(aPointsFinal)+"-"+String(bPointsFinal);
+    var stA = sa1+sa2+sa3+sa4+sa5;
+    var stB = sb1+sb2+sb3+sb4+sb5;
+    
+    const match = new Match(selA, selB, res, stA, stB);
+    pastMatches.push(match);
+
+    
+    alert(pastMatches[0].nameA+" "+pastMatches[0].nameB+" "+pastMatches[0].result+" "+pastMatches[0].setsA+" "+pastMatches[0].setsB+" ")
+    
+    var objFilt = pastMatches.filter(function(v) {
+  return ((v.nameA === "marko"&&v.nameB === "nina") || (v.nameA === "nina"&&v.nameB === "marko"));
+    
+});
+    alert(objFilt);
     
     aPointsFinal = 0;
     bPointsFinal = 0;
     $("#matchResult")[0].reset();
     document.getElementById("submitMatch").disabled = true;
-    alert(players[0].wins);
+    
     
 }
 }
