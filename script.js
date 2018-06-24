@@ -7,6 +7,7 @@ const submitMatch = document.getElementById("submitMatch");
 var selectA = document.getElementById("selectA");
 var selectB = document.getElementById("selectB");
 var rankings = document.getElementById("rankings");
+var allMatches = document.getElementById("allMatches");
 var p1 = document.getElementById("p1");
 var p2 = document.getElementById("p2");
 var p3 = document.getElementById("p3");
@@ -14,8 +15,8 @@ var p4 = document.getElementById("p4");
 var p5 = document.getElementById("p5");
 var duplicateNames = document.getElementById("duplicateNames");
 
-var aPointsFinal = 0;
-var bPointsFinal = 0;
+//var aPointsFinal = 0;
+//var bPointsFinal = 0;
 
     
 
@@ -34,6 +35,14 @@ function Player (n, w, l) {
       this.losses = l;
 }
 
+function Match (p1, p2, r, s) {
+      this.player1 = p1;
+      this.player2 = p2;
+      this.result = r;
+      this.sets1 = st1;
+      this.sets2 = st2;
+}
+
 // all good
 submitPlayer.addEventListener("click", function() {
   const player = new Player(playerName.value, 0, 0);
@@ -48,7 +57,7 @@ submitPlayer.addEventListener("click", function() {
   if(players.length>1){
       document.getElementById("morePlayers").innerHTML = "";
   }
-  alert(players.length);
+
 });
 
 /*
@@ -110,10 +119,10 @@ if(/*selectA.value!==""&&selectB.value!==""*/selA!==selB)
     if((((a1-b1)>1||(b1-a1)>1)&&((a1===11||b1===11)))||(((a1-b1)===2||(b1-a1)===2)&&(a1>11||b1>11))){
         if(a1>b1){
             p1.innerHTML = selA+ws;
-//            aPoints+=1;
+            aPoints+=1;
         }else{
             p1.innerHTML = selB+ws;
-//            bPoints+=1;
+            bPoints+=1;
         }
     }else{
         p1.innerHTML ="";
@@ -122,10 +131,10 @@ if(/*selectA.value!==""&&selectB.value!==""*/selA!==selB)
     if((((a2-b2)>1||(b2-a2)>1)&&((a2===11||b2===11)))||(((a2-b2)===2||(b2-a2)===2)&&(a2>11||b2>11))){
         if(a2>b2){
             p2.innerHTML = selA+ws;
-//            aPoints+=1;
+            aPoints+=1;
         }else{
             p2.innerHTML = selB+ws;
-//            bPoints+=1;
+            bPoints+=1;
         }
     }else{
         p2.innerHTML ="";    
@@ -134,10 +143,10 @@ if(/*selectA.value!==""&&selectB.value!==""*/selA!==selB)
     if((((a3-b3)>1||(b3-a3)>1)&&((a3===11||b3===11)))||(((a3-b3)===2||(b3-a3)===2)&&(a3>11||b3>11))){
         if(a3>b3){
             p3.innerHTML = selA+ws;
-//            aPoints+=1;
+            aPoints+=1;
         }else{
             p3.innerHTML = selB+ws;
-//            bPoints+=1;
+            bPoints+=1;
         }
     }else{
         p3.innerHTML ="";    
@@ -146,10 +155,10 @@ if(/*selectA.value!==""&&selectB.value!==""*/selA!==selB)
     if((((a4-b4)>1||(b4-a4)>1)&&((a4===11||b4===11)))||(((a4-b4)===2||(b4-a4)===2)&&(a4>11||b4>11))){
         if(a4>b4){
             p4.innerHTML = selA+ws;
-//            aPoints+=1;
+            aPoints+=1;
         }else{
             p4.innerHTML = selB+ws;
-//            bPoints+=1;
+            bPoints+=1;
         }
     }else{
         p4.innerHTML ="";    
@@ -158,10 +167,10 @@ if(/*selectA.value!==""&&selectB.value!==""*/selA!==selB)
     if((((a5-b5)>1||(b5-a5)>1)&&((a5===11||b5===11)))||(((a5-b5)===2||(b5-a5)===2)&&(a5>11||b5>11))){
         if(a5>b5){
             p5.innerHTML = selA+ws;
-//            aPoints+=1;
+            aPoints+=1;
         }else{
             p5.innerHTML = selB+ws;
-//            bPoints+=1;
+            bPoints+=1;
         }
     }else{
         p5.innerHTML ="";    
@@ -190,50 +199,76 @@ selA!==selB
 
 $("#submitMatch").click(function(e) {
     
+    var a1 = Number(matchResult.a1.value);
+    var a2 = Number(matchResult.a2.value);
+    var a3 = Number(matchResult.a3.value);
+    var a4 = Number(matchResult.a4.value);
+    var a5 = Number(matchResult.a5.value);
     
-    /*
-    var a1 = String(matchResult.a1.value);
-    var a2 = String(matchResult.a2.value);
-    var a3 = String(matchResult.a3.value);
-    var a4 = String(matchResult.a4.value);
-    var a5 = String(matchResult.a5.value);
+    var b1 = Number(matchResult.b1.value);
+    var b2 = Number(matchResult.b2.value);
+    var b3 = Number(matchResult.b3.value);
+    var b4 = Number(matchResult.b4.value);
+    var b5 = Number(matchResult.b5.value);
     
-    var b1 = String(matchResult.b1.value);
-    var b2 = String(matchResult.b2.value);
-    var b3 = String(matchResult.b3.value);
-    var b4 = String(matchResult.b4.value);
-    var b5 = String(matchResult.b5.value);
+    var sa1 = "";
+    var sa2 = "";
+    var sa3 = "";
+    var sa4 = "";
+    var sa5 = "";
     
-    var sFinal;
-    var s1 = "";
-    var s2 = "";
-    var s3 = "";
-    var s4 = "";
-    var s5 = "";
-    */
-    /*
-    if(p1.length>0){
-        s1=" "+a1+"-"+b1+" "
-    }
-    if(p2.length>0){
-        s2=" "+a2+"-"+b2+" "
-    }
-    if(p3.length>0){
-        s3=" "+a3+"-"+b3+" "
-    }
-    if(p4.length>0){
-        s4=" "+a4+"-"+b4+" "
-    }
-    if(p5.length>0){
-        s5=" "+a5+"-"+b5+" "
-    }
-    */
+    var sb1 = "";
+    var sb2 = "";
+    var sb3 = "";
+    var sb4 = "";
+    var sb5 = "";
     
     
-    sFinal = selectA.value+" vs. "+selectB.value+": "+aPointsFinal+"-"+bPointsFinal/*+" ("+s1+s2+s3+s4+s5+")"*/;
-        alert(sFinal);
-        matches.push(sFinal);
-
+    var aPointsFinal = 0;
+    var bPointsFinal = 0;
+    
+    if(a1>b1){aPointsFinal+=1}
+    if(a2>b2){aPointsFinal+=1}
+    if(a3>b3){aPointsFinal+=1}
+    if(a4>b4){aPointsFinal+=1}
+    if(a5>b5){aPointsFinal+=1}
+    
+    if(b1>a1){bPointsFinal+=1}
+    if(b2>a2){bPointsFinal+=1}
+    if(b3>a3){bPointsFinal+=1}
+    if(b4>a4){bPointsFinal+=1}
+    if(b5>a5){bPointsFinal+=1}
+    
+    if((a1||b1)>10){
+        sa1+=String(a1);
+        sb1+=String(b1);
+    }
+    
+    if((a2||b2)>10){
+        sa2+=String(a2);
+        sb2+=String(b2);
+    }
+    
+    if((a3||b3)>10){
+        sa3+=String(a3);
+        sb3+=String(b3);
+    }
+    
+    if((a4||b4)>10){
+        sa4+=String(a4);
+        sb4+=String(b4);
+    }
+    
+    if((a5||b5)>10){
+        sa5+=String(a5);
+        sb5+=String(b5);
+    } 
+    
+    
+    
+    matches.push(selectA.value+" vs. "+selectB.value+" : "+aPointsFinal+"-"+bPointsFinal+
+    " ("+sa1+"-"+sb1+"/"+sa2+"-"+sb2+"/"+sa3+"-"+sb3+"/"+sa4+"-"+sb4+"/"+sa5+"-"+sb5+")");
+    
     
     
     
@@ -258,6 +293,7 @@ $("#submitMatch").click(function(e) {
     bPointsFinal = 0;
     $("#matchResult")[0].reset();
     document.getElementById("submitMatch").disabled = true;
+    alert(players[0].wins);
     
 }
 }
@@ -293,16 +329,6 @@ selectB.appendChild(option);
 });
 
 
-$("#playerList").on("click", function (e) {
-    if(rankings.innerHTML === ""){
-        var str = "";
-    for(i=0;i<players.length;i++){
-        str+="Rank: "+(i+1)+"  Name: "+players[i].name+"  Wins: "+players[i].wins+"  Losses: "+players[i].losses+"<hr>";
-        rankings.innerHTML = str;}
-    }else{
-        rankings.innerHTML = "";
-    }
-});
 
 
 function compareWins(p1,p2) {
@@ -346,14 +372,16 @@ $("#playerRankings").on("click", function (e) {
         rankings.innerHTML = "";
     }
 });
-/*
+
 $("#matchHistory").on("click", function (e) {
-   
+    if(allMatches.innerHTML === ""){
+        allMatches.innerHTML = matches.join("<br>");
+    }else{
+        allMatches.innerHTML = ""; 
+    }
+    
 });
-*/
-$("#test").on("click", function (e) {
-    alert(typeof(selectA.value));
-    alert(selectA.value);
-});
+
+
 
 };
