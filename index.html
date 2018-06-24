@@ -64,7 +64,20 @@ New match: <br><br><form id="matchResult">
             <p id="p5"></p><br>
             <p id="winner"></p>
      <button id="submitMatch">Submit></button><br>
-</form>       
+</form><hr> 
+
+
+
+
+Past match overview: <br><form id="pastMatch">
+    Player A: <select id="pastA" class="sets">
+            <option value=''>Select ...</option>
+<!--            <option selected="">Please select</option> -->
+          </select>
+    Player B: <select id="pastB" class="sets">
+            <option value=''>Select ...</option>
+          </select>    
+</form>
  
 <!-- Player B:<select id="selectB">
             <option selected="">Please select</option> 
@@ -93,16 +106,13 @@ New match: <br><br><form id="matchResult">
 
 
     <button id="matchHistory">Match history</button>
-    <p id="matches"></p>
+    <p id="allMatches"></p>
     
     <button id="playerRankings">Players rankings</button>
     <p id="rankings"></p>
     
-    <button id="test">test</button>
-    <p id="tp"></p>
     
 	<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/additional-methods.min.js"></script>
+
 	</body>
 </html>
