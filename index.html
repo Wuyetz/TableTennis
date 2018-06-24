@@ -37,11 +37,11 @@
 -->
 
 New match: <br><br><form id="matchResult">
-    Player A: <select id="selectA" class="playerSelect">
+    Player A: <select id="selectA" class="sets">
             <option value=''>Select ...</option>
 <!--            <option selected="">Please select</option> -->
           </select>
-    Player B: <select id="selectB" class="playerSelect">
+    Player B: <select id="selectB" class="sets">
             <option value=''>Select ...</option>
 <!--            <option selected="">Please select</option> -->
           </select>
@@ -62,7 +62,7 @@ New match: <br><br><form id="matchResult">
             <input type="number" name="b5" class="sets" value="0">
             <p id="p5"></p><br>
             <p id="winner"></p>
-     <input type="submit" value="Submit" id="submitMatch"><br>
+     <button id="submitMatch">Submit></button><br>
 </form>       
  
 <!-- Player B:<select id="selectB">
@@ -91,10 +91,10 @@ New match: <br><br><form id="matchResult">
 
 
 
-    <button id="matchesList">Match history</button>
+    <button id="matchHistory">Match history</button>
     <p id="matches"></p>
     
-    <button id="playerList">Players rankings</button>
+    <button id="playerRankings">Players rankings</button>
     <p id="rankings"></p>
     
     <button id="test">test</button>
