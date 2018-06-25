@@ -24,6 +24,7 @@
         </style>
 	</head>
 	<body>
+	<br>
 <!--	<form id="newPlayer">-->
 	Add new player: <input type="text" id="playerName">
   <!--  <input type="submit" value="Submit" id="submitPlayer">-->
@@ -37,8 +38,9 @@
 <!--
 <button id="match">Add new match</button><hr>
 -->
-
-Add new match- pick two players and enter their points: <br><br><form id="matchResult">
+<h4>Add new match</h4>
+Pick two players and enter their points while respecting table tennis rules. 
+If everything is correct you may submit the match!<br><br><form id="matchResult">
     Player A: <select id="selectA" class="sets">
             <option value=''>Select ...</option>
 <!--            <option selected="">Please select</option> -->
@@ -70,7 +72,7 @@ Add new match- pick two players and enter their points: <br><br><form id="matchR
 
 
 
-Pick two players and see their past matches: <br><form id="pastMatch">
+Pick two players and see their past matches: <br><form id="pastMatches">
     Player A: <select id="pastA" class="past">
             <option value=''>Select ...</option>
 
@@ -80,7 +82,7 @@ Pick two players and see their past matches: <br><form id="pastMatch">
           </select>  
             <button id="submitPair">Submit></button><br>
         <p id="pastP"></p><br>
-</form>
+</form><hr>
  
 <!-- Player B:<select id="selectB">
             <option selected="">Please select</option> 
@@ -106,16 +108,24 @@ Pick two players and see their past matches: <br><form id="pastMatch">
         </table>
 -->
 
+Pick a player to see his match history: <br><form id="playerHistory">
+    Player: <select id="player" class="phis">
+            <option value=''>Select ...</option>
+            
+            </select>
+            <button id="submitPlayerHistory">Submit></button><br>
+        <p id="playerHis"></p><br>
+</form><hr>
 
-
-    <button id="matchHistory">Match history</button>
-    <p id="allMatches"></p>
+    <button id="matchHistory">Complete match history</button>
+    <p id="allMatches"></p><hr>
     
-    <button id="playerRankings">Players rankings</button>
-    <p id="rankings"></p>
+    <button id="playerRankings">Players rankings</button> Sorted alphabetically, by wins, win-loss difference and last by sets won
+    <p id="rankings"></p><hr>
     
     
 	<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 
 	</body>
+</html>
 </html>
