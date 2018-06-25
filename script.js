@@ -6,6 +6,8 @@ const submitPlayer = document.getElementById("submitPlayer");
 const submitMatch = document.getElementById("submitMatch");
 var selectA = document.getElementById("selectA");
 var selectB = document.getElementById("selectB");
+var pastA = document.getElementById("pastA");
+var pastB = document.getElementById("pastB");
 var rankings = document.getElementById("rankings");
 var allMatches = document.getElementById("allMatches");
 var p1 = document.getElementById("p1");
@@ -18,7 +20,7 @@ var duplicateNames = document.getElementById("duplicateNames");
 //var aPointsFinal = 0;
 //var bPointsFinal = 0;
 
-    
+
 
 
 
@@ -28,25 +30,27 @@ var matches = [];
 var pastMatches = [];
 
 document.getElementById("submitMatch").disabled = true;
+document.getElementById("submitPair").disabled = true;
 
 
-function Player (n, w, l) {
+function Player (n, w, l, s) {
       this.name = n;
       this.wins = w;
       this.losses = l;
+      this.sets = s;
 }
 
-function Match (pA, pB, r, stA, stB) {
+function Match (pA, pB, r, st) {
       this.nameA = pA;
       this.nameB = pB;
       this.result = r;
-      this.setsA = stA;
-      this.setsB = stB;
+      this.sets = st;
+
 }
 
 // all good
 submitPlayer.addEventListener("click", function() {
-  const player = new Player(playerName.value, 0, 0);
+  const player = new Player(playerName.value, 0, 0, 0);
   for(i=0;i<players.length;i++){
    if(players[i].name===playerName.value){
           duplicateNames.innerHTML = "That player already exists! Enter a new one!";
@@ -113,9 +117,10 @@ if(selA===selB){
     p3.innerHTML ="";
     p4.innerHTML ="";
     p5.innerHTML ="";
+    document.getElementById("submitMatch").disabled = true;
 }    
 
-if(/*selectA.value!==""&&selectB.value!==""*/selA!==selB)
+if(selA!==selB)
     {
     if((((a1-b1)>1||(b1-a1)>1)&&((a1===11||b1===11)))||(((a1-b1)===2||(b1-a1)===2)&&(a1>11||b1>11))){
         if(a1>b1){
@@ -177,9 +182,7 @@ if(/*selectA.value!==""&&selectB.value!==""*/selA!==selB)
         p5.innerHTML ="";    
     }
     }    
-if((aPoints>2||bPoints>2)&&(((aPoints-bPoints)<4)&&((bPoints-aPoints)<4))&&(/*selectA.value!==selectB.value*/
-selA!==selB
-)){
+if((aPoints>2||bPoints>2)&&(((aPoints-bPoints)<4)&&((bPoints-aPoints)<4))&&(selA!==selB)){
     
     if(aPoints>bPoints){
         winner.innerHTML = selA+" wins this match! Submit it and add another one.";
@@ -278,51 +281,92 @@ $("#submitMatch").click(function(e) {
         if(selectA.value===players[i].name){
             if(aPointsFinal>bPointsFinal){
                 players[i].wins+=1;
-            }else{
+            }
+            if(aPointsFinal<bPointsFinal){
                 players[i].losses+=1;
             }
+        }
         if(selectB.value===players[i].name){
             if(bPointsFinal>aPointsFinal){
                 players[i].wins+=1;
-            }else{
+            }
+            if(aPointsFinal>bPointsFinal){
                 players[i].losses+=1;
             }
-            
         }
-        
+    }
+    
+    for(i=0;i<players.length;i++){
+        if(selectA.value===players[i].name){
+            players[i].sets+=aPointsFinal;
+        }
+        if(selectB.value===players[i].name){
+            players[i].sets+=bPointsFinal;
+        }
+    }
     
 
     var selA = $("#selectA option:selected").text();
     var selB = $("#selectB option:selected").text();
     var res = String(aPointsFinal)+"-"+String(bPointsFinal);
-    var stA = sa1+sa2+sa3+sa4+sa5;
-    var stB = sb1+sb2+sb3+sb4+sb5;
+    var sets = sa1+"-"+sb1+"/"+sa2+"-"+sb2+"/"+sa3+"-"+sb3+"/"+sa4+"-"+sb4+"/"+sa5+"-"+sb5;
+
     
-    const match = new Match(selA, selB, res, stA, stB);
+    const match = new Match(selA, selB, res, sets);
     pastMatches.push(match);
 
     
-    alert(pastMatches[0].nameA+" "+pastMatches[0].nameB+" "+pastMatches[0].result+" "+pastMatches[0].setsA+" "+pastMatches[0].setsB+" ")
-    
-    var objFilt = pastMatches.filter(function(v) {
-  return ((v.nameA === "marko"&&v.nameB === "nina") || (v.nameA === "nina"&&v.nameB === "marko"));
-    
-});
-    alert(objFilt);
+    alert(pastMatches[0].nameA+" "+pastMatches[0].nameB+" "+pastMatches[0].result+" "+pastMatches[0].sets);
     
     aPointsFinal = 0;
     bPointsFinal = 0;
     $("#matchResult")[0].reset();
     document.getElementById("submitMatch").disabled = true;
-    
-    
-}
-}
+
 });
 
 
+
+
+$("#submitPair").click(function(e) {
+    
+    
+    var psA = $("#pastA option:selected").text();
+    var psB = $("#pastB option:selected").text();
+    var objFiltA = pastMatches.filter(function(v) {
+//  return ((v.nameA === psA&&v.nameB === psB) || (v.nameA === psB&&v.nameB === psA));
+    return (v.nameA === psA || v.nameA === psB)
+});
+    var objFiltB = objFiltA.filter(function(v) {
+//  return ((v.nameA === psA&&v.nameB === psB) || (v.nameA === psB&&v.nameB === psA));
+    return (v.nameB === psA || v.nameB === psB)
+});
+//    alert(JSON.stringify(objFilt[0], null, 4));
+//    alert(JSON.stringify(players[0], null, 4));
+   
+    if(objFiltB.length===0){
+        document.getElementById("pastP").innerHTML = "Pick two other players!";
+    }else{
+        for(b=0;b<objFiltB.length;b++){
+            document.getElementById("pastP").innerHTML += objFiltB[b].nameA+" vs. "+objFiltB[b].nameB+": "+objFiltB[b].result+
+            " ("+objFiltB[b].sets+")"+"<br>";
+        }
+     $("#pastMatch")[0].reset();
+    document.getElementById("submitPair").disabled = true;
+}});
+
+function Match (pA, pB, r, st) {
+      this.nameA = pA;
+      this.nameB = pB;
+      this.result = r;
+      this.sets = st;
+
+}
+
+
+
 $("#selectA").on("focus", function (e) {
-    $('#selectA')
+    $("#selectA")
     .empty();
     if(players.length<2){
         document.getElementById("morePlayers").innerHTML = "Add at least two players!";
@@ -335,12 +379,12 @@ selectA.appendChild(option);
 });
 });
 
-
-
-
 $("#selectB").on("focus", function (e) {
-    $('#selectB')
+    $("#selectB")
     .empty();
+    if(players.length<2){
+        document.getElementById("morePlayers").innerHTML = "Add at least two players!";
+    }
     players.forEach(function(item){
 var option = document.createElement("option");
 option.value = item.name;
@@ -350,7 +394,44 @@ selectB.appendChild(option);
 });
 
 
+$("#pastA").on("focus", function (e) {
+    
+    document.getElementById("pastP").innerHTML = "";
+    $("#pastA")
+    .empty();
+    players.forEach(function(item){
+var option = document.createElement("option");
+option.value = item.name;
+option.innerHTML = item.name;
+pastA.appendChild(option);
+});
+});
 
+$("#pastB").on("focus", function (e) {
+    document.getElementById("pastP").innerHTML = "";
+    $("#pastB")
+    .empty();
+    players.forEach(function(item){
+var option = document.createElement("option");
+option.value = item.name;
+option.innerHTML = item.name;
+pastB.appendChild(option);
+});
+});    
+
+$(document).on("change" , ".past" , function(){
+
+    var pstA = $("#pastA option:selected").text();
+    var pstB = $("#pastB option:selected").text();
+    if((pstA!=="")&&(pstB!=="")&&(pstA!==pstB)){
+        document.getElementById("submitPair").disabled = false;
+    }else{
+        document.getElementById("submitPair").disabled = true;
+    }
+
+
+
+});
 
 function compareWins(p1,p2) {
   if (p1.wins < p2.wins)
@@ -370,24 +451,40 @@ function compareDiff(p1,p2) {
     }
 }
 
+function compareSets(p1,p2) {
+    if ((p1.wins === p2.wins)&&(p1.diff === p2.dif)){
+        if (p1.sets < p2.sets)
+     return 1;
+  if (p1.sets > p2.sets)
+    return -1;
+  return 0; 
+    }
+}
+
 
 
 
 $("#playerRankings").on("click", function (e) {
 
-    for(g=0;g<players.length;g++){
-        players[g].diff = players[g].wins - players[g].losses
-    };
+    
     players.sort(function(a, b) {
     var textA = a.name.toUpperCase();
     var textB = b.name.toUpperCase();
     return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+    
 });
+    for(g=0;g<players.length;g++){
+        players[g].diff = players[g].wins - players[g].losses
+    };
+
+    players.sort(compareWins);
+    players.sort(compareDiff);
+    players.sort(compareSets);
     
     if(rankings.innerHTML === ""){
         var str = "";
     for(i=0;i<players.length;i++){
-        str+="Rank: "+(i+1)+"  Name: "+players[i].name+"  Wins: "+players[i].wins+"  Losses: "+players[i].losses+"<hr>";
+        str+="Rank: "+(i+1)+"  Name: "+players[i].name+"  Wins: "+players[i].wins+"  Losses: "+players[i].losses+" Sets: "+players[i].sets+"<hr>";
         rankings.innerHTML = str;}
     }else{
         rankings.innerHTML = "";
