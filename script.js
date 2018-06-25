@@ -4,23 +4,32 @@ window.onload = function(){
 const playerName = document.getElementById("playerName");
 const submitPlayer = document.getElementById("submitPlayer");
 const submitMatch = document.getElementById("submitMatch");
-var selectA = document.getElementById("selectA");
-var selectB = document.getElementById("selectB");
-var pastA = document.getElementById("pastA");
-var pastB = document.getElementById("pastB");
-var player = document.getElementById("player");
-var rankings = document.getElementById("rankings");
-var allMatches = document.getElementById("allMatches");
-var p1 = document.getElementById("p1");
-var p2 = document.getElementById("p2");
-var p3 = document.getElementById("p3");
-var p4 = document.getElementById("p4");
-var p5 = document.getElementById("p5");
-var duplicateNames = document.getElementById("duplicateNames");
+const selectA = document.getElementById("selectA");
+const selectB = document.getElementById("selectB");
+const pastA = document.getElementById("pastA");
+const pastB = document.getElementById("pastB");
+const player = document.getElementById("player");
+const game = document.getElementById("game");
+const rankings = document.getElementById("rankings");
+const allMatches = document.getElementById("allMatches");
+const duplicateNames = document.getElementById("duplicateNames");
+const p1 = document.getElementById("p1");
+const p2 = document.getElementById("p2");
+const p3 = document.getElementById("p3");
+const p4 = document.getElementById("p4");
+const p5 = document.getElementById("p5");
+
 
 //var aPointsFinal = 0;
 //var bPointsFinal = 0;
 
+jQuery(function ($) {
+
+        $("#selectA").trigger("change");
+        $("#selectB").trigger("change");
+
+    });
+    
 
 
 
@@ -32,6 +41,8 @@ var matches = [];
 
 document.getElementById("submitMatch").disabled = true;
 document.getElementById("submitPair").disabled = true;
+document.getElementById("submitPlayerHistory").disabled = true;
+document.getElementById("submitGameHistory").disabled = true;
 
 
 
@@ -42,11 +53,12 @@ function Player (n, w, l, s) {
       this.sets = s;
 }
 
-function Match (pA, pB, r, st) {
+function Match (pA, pB, r, st, or) {
       this.nameA = pA;
       this.nameB = pB;
       this.result = r;
       this.sets = st;
+      this.order = or;
 
 }
 
@@ -83,7 +95,9 @@ $(document).ready(function(){
 });*/
 
 
-$(document).on("change" , ".sets" , function(){
+$(document).on("change focusout mouseleave" , ".sets" , function(){
+    
+    
 
     var a1 = Number(matchResult.a1.value);
     var a2 = Number(matchResult.a2.value);
@@ -184,7 +198,7 @@ if(selA!==selB)
         p5.innerHTML ="";    
     }
     }    
-if((aPoints>2||bPoints>2)&&(((aPoints-bPoints)<4)&&((bPoints-aPoints)<4))&&(selA!==selB)){
+if((aPoints>2||bPoints>2)&&(((aPoints-bPoints)<4)&&((bPoints-aPoints)<4))&&(selA!==selB)&&(selA!==""||selB!=="")){
     
     if(aPoints>bPoints){
         winner.innerHTML = selA+" wins this match! Submit it and add another one.";
@@ -312,10 +326,13 @@ $("#submitMatch").click(function(e) {
     var selB = $("#selectB option:selected").text();
     var res = String(aPointsFinal)+"-"+String(bPointsFinal);
     var sets = sa1+"-"+sb1+"/"+sa2+"-"+sb2+"/"+sa3+"-"+sb3+"/"+sa4+"-"+sb4+"/"+sa5+"-"+sb5;
+    var ord = matches.length;
 
     
-    const match = new Match(selA, selB, res, sets);
+    const match = new Match(selA, selB, res, sets, 0);
     matches.push(match);
+    matches[ord].order = ord+1;
+    
 
     
 //    alert(pastMatches[0].nameA+" "+pastMatches[0].nameB+" "+pastMatches[0].result+" "+pastMatches[0].sets);
@@ -472,6 +489,20 @@ $(document).on("blur" , "#player" , function(){
 });
 */
 
+$("#game").on("focus", function (e) {
+    
+    document.getElementById("gameHis").innerHTML = "";
+    $("#game").empty();
+    matches.forEach(function(item){
+var option = document.createElement("option");
+option.value = item.order;
+option.innerHTML = item.order+". "+item.nameA+"-"+item.nameB;
+game.appendChild(option);
+});
+$("#game").prepend("<option value='' selected='selected'></option>");
+});
+
+
 $("#player").on("focus", function (e) {
     
     document.getElementById("playerHis").innerHTML = "";
@@ -503,6 +534,17 @@ $(document).on("change" , ".phis" , function(){
 });
 
 
+$(document).on("change" , ".ghis" , function(){
+
+    var gh = $("#game option:selected").text();
+    if(gh!==""){
+        document.getElementById("submitGameHistory").disabled = false;
+    }else{
+        document.getElementById("submitGameHistory").disabled = true;
+    }
+});
+
+
 $("#submitPlayerHistory").click(function(e) {
     var ph = $("#player option:selected").text();
     var objFilt = matches.filter(function(v) {
@@ -524,6 +566,26 @@ $("#submitPlayerHistory").click(function(e) {
 }});
 
 
+$("#submitGameHistory").click(function(e) {
+    var gh = $("#game option:selected").val();
+    var objFilt = matches.filter(function(v) {
+//  return ((v.nameA === psA&&v.nameB === psB) || (v.nameA === psB&&v.nameB === psA));
+    return (String(v.order) == gh)
+    });
+    if(objFilt.length===0){
+        document.getElementById("gameHis").innerHTML = "No such match, pick another!";
+        $("#gameHistory")[0].reset();
+         document.getElementById("submitGameHistory").disabled = true;
+    }else{
+            document.getElementById("gameHis").innerHTML = "game "+objFilt[0].order+".) "+objFilt[0].nameA+" vs. "+objFilt[0].nameB+": "+
+            objFilt[0].result+" ("+objFilt[0].sets+")"+"<br>";
+        }
+    $("#gameHistory")[0].reset();
+     document.getElementById("submitGameHistory").disabled = true;
+    
+});
+
+
 function compareWins(p1,p2) {
   if (p1.wins < p2.wins)
      return 3;
@@ -543,7 +605,7 @@ function compareDiff(p1,p2) {
 }
 
 function compareSets(p1,p2) {
-    if ((p1.wins === p2.wins)&&(p1.diff === p2.dif)){
+    if ((p1.wins === p2.wins)&&(p1.diff === p2.diff)){
         if (p1.sets < p2.sets)
      return 1;
   if (p1.sets > p2.sets)
@@ -594,14 +656,8 @@ $("#matchHistory").on("click", function (e) {
 });
 
 
-function Match (pA, pB, r, st) {
-      this.nameA = pA;
-      this.nameB = pB;
-      this.result = r;
-      this.sets = st;
-
-}
 
 
 
 };
+
