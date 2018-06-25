@@ -83,6 +83,8 @@ $(document).on("change focusout mouseleave" , ".newMatch" , function(){
     var ws = " wins this set!";
     var aPoints = 0;
     var bPoints = 0;
+    var p1k = document.getElementById("p1k");
+/*  
     if(selA===selB){
         p1.innerHTML ="";
         p2.innerHTML ="";
@@ -91,64 +93,80 @@ $(document).on("change focusout mouseleave" , ".newMatch" , function(){
         p5.innerHTML ="";
         document.getElementById("submitMatch").disabled = true;
     }    
+*/
     if(selA!==selB){
         if((((a1-b1)>1||(b1-a1)>1)&&((a1===11||b1===11)))||(((a1-b1)===2||(b1-a1)===2)&&(a1>11||b1>11))){
             if(a1>b1){
                 p1.innerHTML = selA+ws;
                 aPoints+=1;
+                p1k.innerHTML ="correct set score";
             }else{
                 p1.innerHTML = selB+ws;
                 bPoints+=1;
+                p1k.innerHTML ="correct set score";
             }
         }else{
             p1.innerHTML ="";
+            p1k.innerHTML ="";
         }
         if((((a2-b2)>1||(b2-a2)>1)&&((a2===11||b2===11)))||(((a2-b2)===2||(b2-a2)===2)&&(a2>11||b2>11))){
             if(a2>b2){
                 p2.innerHTML = selA+ws;
                 aPoints+=1;
+                p2k.innerHTML ="correct set score";
             }else{
                 p2.innerHTML = selB+ws;
                 bPoints+=1;
+                p2k.innerHTML ="correct set score";
             }
         }else{
-            p2.innerHTML ="";    
+            p2.innerHTML ="";
+            p2k.innerHTML ="";
         }
          if((((a3-b3)>1||(b3-a3)>1)&&((a3===11||b3===11)))||(((a3-b3)===2||(b3-a3)===2)&&(a3>11||b3>11))){
             if(a3>b3){
                 p3.innerHTML = selA+ws;
                 aPoints+=1;
+                p3k.innerHTML ="correct set score";
             }else{
                 p3.innerHTML = selB+ws;
                 bPoints+=1;
+                p3k.innerHTML ="correct set score";
             }
         }else{
-            p3.innerHTML ="";    
+            p3.innerHTML ="";
+            p3k.innerHTML ="";
         }
         if((((a4-b4)>1||(b4-a4)>1)&&((a4===11||b4===11)))||(((a4-b4)===2||(b4-a4)===2)&&(a4>11||b4>11))){
             if(a4>b4){
                 p4.innerHTML = selA+ws;
                 aPoints+=1;
+                p4k.innerHTML ="correct set score";
             }else{
                 p4.innerHTML = selB+ws;
                 bPoints+=1;
+                p4k.innerHTML ="correct set score";
             }
         }else{
-            p4.innerHTML ="";    
+            p4.innerHTML ="";
+            p4k.innerHTML ="";
         }
         if((((a5-b5)>1||(b5-a5)>1)&&((a5===11||b5===11)))||(((a5-b5)===2||(b5-a5)===2)&&(a5>11||b5>11))){
             if(a5>b5){
                 p5.innerHTML = selA+ws;
                 aPoints+=1;
+                p5k.innerHTML ="correct set score";
             }else{
                 p5.innerHTML = selB+ws;
                 bPoints+=1;
+                p5k.innerHTML ="correct set score";
             }
         }else{
-            p5.innerHTML ="";    
+            p5.innerHTML ="";
+            p5k.innerHTML ="";
         }
     }    
-    if((aPoints>2||bPoints>2)&&(((aPoints-bPoints)<4)&&((bPoints-aPoints)<4))&&(selA!==selB)&&(selA!==""||selB!=="")){
+    if((aPoints>2||bPoints>2)&&((aPoints<4)&&(bPoints<4))&&(selA!==selB)&&(selA!==""||selB!=="")){
         if(aPoints>bPoints){
             winner.innerHTML = selA+" wins this match! Submit it and add another one.";
         }else{
@@ -157,6 +175,11 @@ $(document).on("change focusout mouseleave" , ".newMatch" , function(){
     document.getElementById("submitMatch").disabled = false;
     }else{
         winner.innerHTML ="";
+        p1.innerHTML ="";
+        p2.innerHTML ="";
+        p3.innerHTML ="";
+        p4.innerHTML ="";
+        p5.innerHTML ="";
         document.getElementById("submitMatch").disabled = true;
     }
 });
