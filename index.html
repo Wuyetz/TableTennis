@@ -3,138 +3,106 @@
 	<head>
 		<title>Page Title</title>
 		<script src="script.js" type="text/javascript"></script>
-		
 		<style>
             select
-            {
+                {
                 width:150px;
-            }
+                }
             input
-            {
+                {
                 width:200px;
-            }
+                }
             #submitMatch
-            {
+                {
                 width:100px;
-            }
-            #winner {
+                }
+            #winner 
+                {
                 font-weight: bold;
-            }
-        
+                }
         </style>
 	</head>
 	<body>
-	<br>
-	
-	
-<!--	<form id="newPlayer">-->
-	Add new player: <input type="text" id="playerName">
-  <!--  <input type="submit" value="Submit" id="submitPlayer">-->
-    <button id="submitPlayer">Submit</button><br>
-    <p id="duplicateNames"></p><br>
-    <p id="morePlayers"></p>
-<!--</form>-->
-<hr>
-
-
-<!--
-<button id="match">Add new match</button><hr>
--->
-<h4>Add new match</h4>
-Pick two players and enter their points while respecting table tennis rules. 
-If everything is correct you may submit the match!<br><br><form id="matchResult">
-    Player A: <select id="selectA" class="sets">
-            <option value=''>Select ...</option>
-<!--            <option selected="">Please select</option> -->
-          </select>
-    Player B: <select id="selectB" class="sets">
-            <option value=''>Select ...</option>
-<!--            <option selected="">Please select</option> -->
-          </select><br>
-    
-    1. Set: <input type="number" name="a1" class="sets" value="0">
+	    <br>
+        Add new player: 
+        <input type="text" id="playerName">
+        <button id="submitPlayer">Submit</button><br>
+        <p id="duplicateNames"></p><br>
+        <p id="morePlayers"></p>
+        <hr>
+        <h4>Add new match</h4>
+        Pick two players and enter their points while respecting table tennis rules. 
+        If everything is correct you may submit the match!
+        <br><br>
+        <form id="matchResult">
+            Player A: 
+            <select id="selectA" class="sets">
+                <option value=''>Select ...</option>
+            </select>
+            Player B: 
+            <select id="selectB" class="sets">
+                <option value=''>Select ...</option>
+            </select><br>
+            1. Set: 
+            <input type="number" name="a1" class="sets" value="0">
             <input type="number" name="b1" class="sets" value="0">
             <p id="p1"></p><br>
-    2. Set: <input type="number" name="a2" class="sets" value="0">
+            2. Set: 
+            <input type="number" name="a2" class="sets" value="0">
             <input type="number" name="b2" class="sets" value="0">
             <p id="p2"></p><br>
-    3. Set: <input type="number" name="a3" class="sets" value="0">
+            3. Set: 
+            <input type="number" name="a3" class="sets" value="0">
             <input type="number" name="b3" class="sets" value="0">
             <p id="p3"></p><br>
-    4. Set: <input type="number" name="a4" class="sets" value="0">
+            4. Set: 
+            <input type="number" name="a4" class="sets" value="0">
             <input type="number" name="b4" class="sets" value="0">
             <p id="p4"></p><br>
-    5. Set: <input type="number" name="a5" class="sets" value="0">
+            5. Set: 
+            <input type="number" name="a5" class="sets" value="0">
             <input type="number" name="b5" class="sets" value="0">
             <p id="p5"></p><br>
             <p id="winner"></p>
-     <button id="submitMatch">Submit></button><br>
-</form><hr> 
-
-
-
-
-Pick two players and see their past matches: <br><form id="pastMatches">
-    Player A: <select id="pastA" class="past">
-            <option value=''>Select ...</option>
-
-          </select>
-    Player B: <select id="pastB" class="past">
-            <option value=''>Select ...</option>
-          </select>  
+            <button id="submitMatch">Submit></button><br>
+        </form><hr> 
+        Pick two players and see their past matches:<br> 
+        <form id="pastMatches">
+            Player A: 
+            <select id="pastA" class="past">
+                <option value=''>Select ...</option>
+            </select>
+            Player B: 
+            <select id="pastB" class="past">
+                <option value=''>Select ...</option>
+            </select>  
             <button id="submitPair">Submit></button><br>
-        <p id="pastP"></p><br>
-</form><hr>
- 
-<!-- Player B:<select id="selectB">
-            <option selected="">Please select</option> 
-          </select><br>
-  -->
-<!--  
-  1. Set: <input type="number" name="a1"><input type="number" name="b1"><br>
-  2. Set: <input type="number" name="a2"><input type="number" name="b2"><br>
-  3. Set: <input type="number" name="a3"><input type="number" name="b3"><br>
-  4. Set: <input type="number" name="a4"><input type="number" name="b4"><br>
-  5. Set: <input type="number" name="a5"><input type="number" name="b5"><br>
-  <input type="submit" value="Submit">
-</form>
-
-<button id="tableButton">Generate table</button>
-<table id="playerTable" border="1">
-            <tr>
-                <td id="Tn">Player</td>
-                <td id="Tw">Won</td>
-                <td id="Tl">Lost</td>
-            </tr>
-
-        </table>
--->
-
-Pick a player to see his/her match history: <br><form id="playerHistory">
-    Player: <select id="player" class="phis">
-            <option value=''>Select ...</option>
+            <p id="pastP"></p><br>
+        </form><hr>
+        Pick a player to see his/her match history: <br>
+        <form id="playerHistory">
+            Player: 
+            <select id="player" class="phis">
+                <option value=''>Select ...</option>
             </select>
             <button id="submitPlayerHistory">Submit></button><br>
-        <p id="playerStats"></p><br>
-        <p id="playerHis"></p><br>
-</form><hr>
-
-Pick a match to see the result: <br><form id="gameHistory">
-     Match: <select id="game" class="ghis">
+            <p id="playerStats"></p><br>
+            <p id="playerHis"></p><br>
+        </form><hr>
+        Pick a match to see the result: <br>
+        <form id="gameHistory">
+        Match: 
+        <select id="game" class="ghis">
             <option value=''>Select ...</option>
-            </select>
-            <button id="submitGameHistory">Submit></button><br>
+        </select>
+        <button id="submitGameHistory">Submit></button><br>
         <p id="gameHis"></p><br>
-</form><hr>
-
-    <button id="matchHistory">Complete match history</button>
-    <p id="allMatches"></p><hr>
-    
-    <button id="playerRankings">Players rankings</button> Sorted alphabetically, by wins, win-loss difference and last by sets won
-    <p id="rankings"></p><hr>
-    
-    
-	<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-
-	</body>
+        </form><hr>
+        <button id="matchHistory">Complete match history</button>
+        <p id="allMatches"></p><hr>
+        <button id="playerRankings">Players rankings</button> 
+        Sorted alphabetically, by wins, win-loss difference and last by sets won
+        <p id="rankings"></p><hr>
+        <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    </body>
 </html>
