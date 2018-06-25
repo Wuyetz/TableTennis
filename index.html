@@ -25,6 +25,8 @@
 	</head>
 	<body>
 	<br>
+	
+	
 <!--	<form id="newPlayer">-->
 	Add new player: <input type="text" id="playerName">
   <!--  <input type="submit" value="Submit" id="submitPlayer">-->
@@ -111,10 +113,17 @@ Pick two players and see their past matches: <br><form id="pastMatches">
 Pick a player to see his match history: <br><form id="playerHistory">
     Player: <select id="player" class="phis">
             <option value=''>Select ...</option>
-            
             </select>
             <button id="submitPlayerHistory">Submit></button><br>
         <p id="playerHis"></p><br>
+</form><hr>
+
+Pick a match to see the result: <br><form id="gameHistory">
+     Match: <select id="game" class="ghis">
+            <option value=''>Select ...</option>
+            </select>
+            <button id="submitGameHistory">Submit></button><br>
+        <p id="gameHis"></p><br>
 </form><hr>
 
     <button id="matchHistory">Complete match history</button>
@@ -127,5 +136,4 @@ Pick a player to see his match history: <br><form id="playerHistory">
 	<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 
 	</body>
-</html>
 </html>
