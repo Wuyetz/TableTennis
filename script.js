@@ -84,6 +84,11 @@ $(document).on("change focusout mouseleave" , ".newMatch" , function(){
     var aPoints = 0;
     var bPoints = 0;
     var p1k = document.getElementById("p1k");
+    var p2k = document.getElementById("p2k");
+    var p3k = document.getElementById("p3k");
+    var p4k = document.getElementById("p4k");
+    var p5k = document.getElementById("p5k");
+    
 /*  
     if(selA===selB){
         p1.innerHTML ="";
@@ -165,7 +170,13 @@ $(document).on("change focusout mouseleave" , ".newMatch" , function(){
             p5.innerHTML ="";
             p5k.innerHTML ="";
         }
-    }    
+    }else{
+        p1k.innerHTML ="";
+        p2k.innerHTML ="";
+        p3k.innerHTML ="";
+        p4k.innerHTML ="";
+        p5k.innerHTML ="";
+    }   
     if((aPoints>2||bPoints>2)&&((aPoints<4)&&(bPoints<4))&&(selA!==selB)&&(selA!==""||selB!=="")){
         if(aPoints>bPoints){
             winner.innerHTML = selA+" wins this match! Submit it and add another one.";
@@ -293,6 +304,17 @@ $("#submitMatch").click(function(e){
     matches[ord].order = ord+1;
     aPointsFinal = 0;
     bPointsFinal = 0;
+    document.getElementById("p1").innerHTML = "";
+    document.getElementById("p2").innerHTML = "";
+    document.getElementById("p3").innerHTML = "";
+    document.getElementById("p4").innerHTML = "";
+    document.getElementById("p5").innerHTML = "";
+    document.getElementById("p1k").innerHTML = "";
+    document.getElementById("p2k").innerHTML = "";
+    document.getElementById("p3k").innerHTML = "";
+    document.getElementById("p4k").innerHTML = "";
+    document.getElementById("p5k").innerHTML = "";
+    document.getElementById("winner").innerHTML = "";
     $("#newMatch")[0].reset();
     document.getElementById("submitMatch").disabled = true;
 });
