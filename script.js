@@ -505,6 +505,7 @@ $("#game").prepend("<option value='' selected='selected'></option>");
 
 $("#player").on("focus", function (e) {
     
+    document.getElementById("playerStats").innerHTML = "";
     document.getElementById("playerHis").innerHTML = "";
     $("#player").empty();
     players.sort(function(a, b) {
@@ -551,11 +552,19 @@ $("#submitPlayerHistory").click(function(e) {
 //  return ((v.nameA === psA&&v.nameB === psB) || (v.nameA === psB&&v.nameB === psA));
     return (v.nameA === ph || v.nameB === ph)
     });
+    var objFiltPlayer = players.filter(function(v) {
+//  return ((v.nameA === psA&&v.nameB === psB) || (v.nameA === psB&&v.nameB === psA));
+    return (v.name === ph)
+    });
     if(objFilt.length===0){
+        document.getElementById("playerStats").innerHTML = "";
         document.getElementById("playerHis").innerHTML = "This player didn´t play yet, pick another!";
         $("#playerHistory")[0].reset();
          document.getElementById("submitPlayerHistory").disabled = true;
     }else{
+        document.getElementById("playerStats").innerHTML = "Name: "+objFiltPlayer[0].name+" / Wins: "+
+        objFiltPlayer[0].wins+" / Losses: "+
+        objFiltPlayer[0].losses+" / Sets won: "+objFiltPlayer[0].sets;
         for(b=0;b<objFilt.length;b++){
             document.getElementById("playerHis").innerHTML += objFilt[b].nameA+" vs. "+objFilt[b].nameB+": "+
             objFilt[b].result+" ("+objFilt[b].sets+")"+"<br>";
@@ -660,4 +669,3 @@ $("#matchHistory").on("click", function (e) {
 
 
 };
-
