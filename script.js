@@ -409,6 +409,7 @@ $("#submitPair").click(function(e) {
 
 $("#game").on("focus", function (e){
     document.getElementById("gameHis").innerHTML = "";
+    document.getElementById("otherGames").innerHTML = "";
     $("#game").empty();
     matches.forEach(function(item){
         var option = document.createElement("option");
@@ -483,6 +484,7 @@ $("#submitPlayerHistory").click(function(e) {
 
 $("#submitGameHistory").click(function(e) {
     var gh = $("#game option:selected").val();
+    var clonedMatches = JSON.parse(JSON.stringify(matches));
     var objFilt = matches.filter(function(v){
         return (String(v.order) == gh)
     });
@@ -493,6 +495,23 @@ $("#submitGameHistory").click(function(e) {
     }else{
         document.getElementById("gameHis").innerHTML = "game "+objFilt[0].order+".) "+objFilt[0].nameA+" vs. "
         +objFilt[0].nameB+": "+objFilt[0].result+" ("+objFilt[0].sets+")"+"<br>";
+        var or = objFilt[0].order;
+        var nA = objFilt[0].nameA;
+        var nB = objFilt[0].nameB;
+        var objFiltA = clonedMatches.filter(function(v){
+            return (v.nameA === nA || v.nameA === nB);
+        });
+        var objFiltB = objFiltA.filter(function(v){
+            return (v.nameB === nA || v.nameB === nB);
+        });
+        var objFiltC = objFiltB.filter(function(v){
+            return (v.order !== or);
+        });
+        document.getElementById("otherGames").innerHTML += "Other games played by this pair of players:"+"<br>";
+        for(b=0;b<objFiltC.length;b++){
+            document.getElementById("otherGames").innerHTML += "game "+objFiltC[b].order+".) "+objFiltC[b].nameA+
+            " vs. "+objFiltC[b].nameB+": "+objFiltC[b].result+" ("+objFiltC[b].sets+")"+"<br>";
+        }
     }
     $("#gameHistory")[0].reset();
     document.getElementById("submitGameHistory").disabled = true;
