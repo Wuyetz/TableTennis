@@ -8,6 +8,7 @@ var selectA = document.getElementById("selectA");
 var selectB = document.getElementById("selectB");
 var pastA = document.getElementById("pastA");
 var pastB = document.getElementById("pastB");
+var player = document.getElementById("player");
 var rankings = document.getElementById("rankings");
 var allMatches = document.getElementById("allMatches");
 var p1 = document.getElementById("p1");
@@ -27,10 +28,11 @@ var duplicateNames = document.getElementById("duplicateNames");
 
 var players = [];
 var matches = [];
-var pastMatches = [];
+//var pastMatches = [];
 
 document.getElementById("submitMatch").disabled = true;
 document.getElementById("submitPair").disabled = true;
+
 
 
 function Player (n, w, l, s) {
@@ -270,8 +272,8 @@ $("#submitMatch").click(function(e) {
     
     
     
-    matches.push(selectA.value+" vs. "+selectB.value+" : "+aPointsFinal+"-"+bPointsFinal+
-    " ("+sa1+"-"+sb1+"/"+sa2+"-"+sb2+"/"+sa3+"-"+sb3+"/"+sa4+"-"+sb4+"/"+sa5+"-"+sb5+")");
+//    matches.push(selectA.value+" vs. "+selectB.value+" : "+aPointsFinal+"-"+bPointsFinal+
+//    " ("+sa1+"-"+sb1+"/"+sa2+"-"+sb2+"/"+sa3+"-"+sb3+"/"+sa4+"-"+sb4+"/"+sa5+"-"+sb5+")");
     
     
     
@@ -313,10 +315,10 @@ $("#submitMatch").click(function(e) {
 
     
     const match = new Match(selA, selB, res, sets);
-    pastMatches.push(match);
+    matches.push(match);
 
     
-    alert(pastMatches[0].nameA+" "+pastMatches[0].nameB+" "+pastMatches[0].result+" "+pastMatches[0].sets);
+//    alert(pastMatches[0].nameA+" "+pastMatches[0].nameB+" "+pastMatches[0].result+" "+pastMatches[0].sets);
     
     aPointsFinal = 0;
     bPointsFinal = 0;
@@ -328,32 +330,7 @@ $("#submitMatch").click(function(e) {
 
 
 
-$("#submitPair").click(function(e) {
-    
-    
-    var psA = $("#pastA option:selected").text();
-    var psB = $("#pastB option:selected").text();
-    var objFiltA = pastMatches.filter(function(v) {
-//  return ((v.nameA === psA&&v.nameB === psB) || (v.nameA === psB&&v.nameB === psA));
-    return (v.nameA === psA || v.nameA === psB)
-});
-    var objFiltB = objFiltA.filter(function(v) {
-//  return ((v.nameA === psA&&v.nameB === psB) || (v.nameA === psB&&v.nameB === psA));
-    return (v.nameB === psA || v.nameB === psB)
-});
-//    alert(JSON.stringify(objFilt[0], null, 4));
-//    alert(JSON.stringify(players[0], null, 4));
-   
-    if(objFiltB.length===0){
-        document.getElementById("pastP").innerHTML = "Pick two other players!";
-    }else{
-        for(b=0;b<objFiltB.length;b++){
-            document.getElementById("pastP").innerHTML += objFiltB[b].nameA+" vs. "+objFiltB[b].nameB+": "+objFiltB[b].result+
-            " ("+objFiltB[b].sets+")"+"<br>";
-        }
-     $("#pastMatch")[0].reset();
-    document.getElementById("submitPair").disabled = true;
-}});
+
 
 function Match (pA, pB, r, st) {
       this.nameA = pA;
@@ -366,11 +343,16 @@ function Match (pA, pB, r, st) {
 
 
 $("#selectA").on("focus", function (e) {
-    $("#selectA")
-    .empty();
+    $("#selectA").empty();
     if(players.length<2){
         document.getElementById("morePlayers").innerHTML = "Add at least two players!";
     }
+    players.sort(function(a, b) {
+    var textA = a.name.toUpperCase();
+    var textB = b.name.toUpperCase();
+    return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+    
+});
     players.forEach(function(item){
 var option = document.createElement("option");
 option.value = item.name;
@@ -380,11 +362,16 @@ selectA.appendChild(option);
 });
 
 $("#selectB").on("focus", function (e) {
-    $("#selectB")
-    .empty();
+    $("#selectB").empty();
     if(players.length<2){
         document.getElementById("morePlayers").innerHTML = "Add at least two players!";
     }
+    players.sort(function(a, b) {
+    var textA = a.name.toUpperCase();
+    var textB = b.name.toUpperCase();
+    return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+    
+});
     players.forEach(function(item){
 var option = document.createElement("option");
 option.value = item.name;
@@ -397,26 +384,40 @@ selectB.appendChild(option);
 $("#pastA").on("focus", function (e) {
     
     document.getElementById("pastP").innerHTML = "";
-    $("#pastA")
-    .empty();
+    $("#pastA").empty();
+    players.sort(function(a, b) {
+    var textA = a.name.toUpperCase();
+    var textB = b.name.toUpperCase();
+    return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+    
+});
     players.forEach(function(item){
 var option = document.createElement("option");
 option.value = item.name;
 option.innerHTML = item.name;
 pastA.appendChild(option);
 });
+$("#pastA").prepend("<option value='' selected='selected'></option>");
 });
+
+
 
 $("#pastB").on("focus", function (e) {
     document.getElementById("pastP").innerHTML = "";
-    $("#pastB")
-    .empty();
+    $("#pastB").empty();
+    players.sort(function(a, b) {
+    var textA = a.name.toUpperCase();
+    var textB = b.name.toUpperCase();
+    return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+    
+});
     players.forEach(function(item){
 var option = document.createElement("option");
 option.value = item.name;
 option.innerHTML = item.name;
 pastB.appendChild(option);
 });
+$("#pastB").prepend("<option value='' selected='selected'></option>");
 });    
 
 $(document).on("change" , ".past" , function(){
@@ -428,10 +429,100 @@ $(document).on("change" , ".past" , function(){
     }else{
         document.getElementById("submitPair").disabled = true;
     }
-
-
-
 });
+
+
+$("#submitPair").click(function(e) {
+
+    var psA = $("#pastA option:selected").text();
+    var psB = $("#pastB option:selected").text();
+    var objFiltA = matches.filter(function(v) {
+//  return ((v.nameA === psA&&v.nameB === psB) || (v.nameA === psB&&v.nameB === psA));
+    return (v.nameA === psA || v.nameA === psB)
+});
+    var objFiltB = objFiltA.filter(function(v) {
+//  return ((v.nameA === psA&&v.nameB === psB) || (v.nameA === psB&&v.nameB === psA));
+    return (v.nameB === psA || v.nameB === psB)
+});
+//    alert(JSON.stringify(objFilt[0], null, 4));
+//    alert(JSON.stringify(players[0], null, 4));
+   
+    if(objFiltB.length===0){
+        document.getElementById("pastP").innerHTML = "No matches between these two players, pick others!";
+        $("#pastMatches")[0].reset();
+    document.getElementById("submitPair").disabled = true;
+    }else{
+        for(b=0;b<objFiltB.length;b++){
+            document.getElementById("pastP").innerHTML += objFiltB[b].nameA+" vs. "+objFiltB[b].nameB+": "+objFiltB[b].result+
+            " ("+objFiltB[b].sets+")"+"<br>";
+        }
+     $("#pastMatches")[0].reset();
+    document.getElementById("submitPair").disabled = true;
+}});
+
+/*
+$(document).on("blur" , "#player" , function(){
+
+    var ph = $("#player option:selected").text();
+    if(ph!==""){
+        document.getElementById("submitPlayerHistory").disabled = false;
+    }else{
+        document.getElementById("submitPlayerHistory").disabled = true;
+    }
+});
+*/
+
+$("#player").on("focus", function (e) {
+    
+    document.getElementById("playerHis").innerHTML = "";
+    $("#player").empty();
+    players.sort(function(a, b) {
+    var textA = a.name.toUpperCase();
+    var textB = b.name.toUpperCase();
+    return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+    
+});
+    players.forEach(function(item){
+var option = document.createElement("option");
+option.value = item.name;
+option.innerHTML = item.name;
+player.appendChild(option);
+});
+$("#player").prepend("<option value='' selected='selected'></option>");
+});
+
+
+$(document).on("change" , ".phis" , function(){
+
+    var ph = $("#player option:selected").text();
+    if(ph!==""){
+        document.getElementById("submitPlayerHistory").disabled = false;
+    }else{
+        document.getElementById("submitPlayerHistory").disabled = true;
+    }
+});
+
+
+$("#submitPlayerHistory").click(function(e) {
+    var ph = $("#player option:selected").text();
+    var objFilt = matches.filter(function(v) {
+//  return ((v.nameA === psA&&v.nameB === psB) || (v.nameA === psB&&v.nameB === psA));
+    return (v.nameA === ph || v.nameB === ph)
+    });
+    if(objFilt.length===0){
+        document.getElementById("playerHis").innerHTML = "This player didn´t play yet, pick another!";
+        $("#playerHistory")[0].reset();
+         document.getElementById("submitPlayerHistory").disabled = true;
+    }else{
+        for(b=0;b<objFilt.length;b++){
+            document.getElementById("playerHis").innerHTML += objFilt[b].nameA+" vs. "+objFilt[b].nameB+": "+
+            objFilt[b].result+" ("+objFilt[b].sets+")"+"<br>";
+        }
+    $("#playerHistory")[0].reset();
+     document.getElementById("submitPlayerHistory").disabled = true;
+    
+}});
+
 
 function compareWins(p1,p2) {
   if (p1.wins < p2.wins)
@@ -493,12 +584,23 @@ $("#playerRankings").on("click", function (e) {
 
 $("#matchHistory").on("click", function (e) {
     if(allMatches.innerHTML === ""){
-        allMatches.innerHTML = matches.join("<br>");
+        for(a=0;a<matches.length;a++){
+            allMatches.innerHTML += matches[a].nameA+" vs. "+matches[a].nameB+"   Score: "+matches[a].result+"   Sets: "
+            +matches[a].sets+"<br>";  }
     }else{
         allMatches.innerHTML = ""; 
     }
     
 });
+
+
+function Match (pA, pB, r, st) {
+      this.nameA = pA;
+      this.nameB = pB;
+      this.result = r;
+      this.sets = st;
+
+}
 
 
 
