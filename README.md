@@ -6,7 +6,7 @@ Run this app by either:
  
  2.) Opening this github pages link: https://wuyetz.github.io/pingpong/
  
- Code I pick for selection process is : ZILEAN
+ Code I picked to represent me for selection process is : ZILEAN
   
   
  
