@@ -302,8 +302,6 @@ $("#submitMatch").click(function(e){
         mm = "0"+mm;
     } 
     today = dd+"/"+mm+"/"+yyyy;
-    alert(today);
-    alert(typeof(today));
     const match = new Match(selA, selB, res, sets, 0, "");
     matches.push(match);
     matches[ord].order = ord+1;
