@@ -1,5 +1,6 @@
 window.onload = function(){
 
+// gets lists of matches and players previously used from localStorage
 var matches = JSON.parse(localStorage.getItem("matches") || "[]");
 var players = JSON.parse(localStorage.getItem("players") || "[]");
 
@@ -21,11 +22,13 @@ const p3 = document.getElementById("p3");
 const p4 = document.getElementById("p4");
 const p5 = document.getElementById("p5");
 
+// ensures newMatch works correctly
 jQuery(function ($) {
 $("#selectA").trigger("change");
 $("#selectB").trigger("change");
 });
 
+// disables various submit buttons, they get enabled when conditions are met
 document.getElementById("submitMatch").disabled = true;
 document.getElementById("submitPair").disabled = true;
 document.getElementById("submitPlayerHistory").disabled = true;
@@ -47,6 +50,7 @@ function Match (pA, pB, r, st, or, dt) {
       this.date = dt;
 }
 
+// creates new Player object from new playerName input, adds it to players array
 submitPlayer.addEventListener("click", function() {
     const player = new Player(playerName.value, 0, 0, 0);
     for(i=0;i<players.length;i++){
@@ -64,6 +68,7 @@ submitPlayer.addEventListener("click", function() {
     }
 });
 
+// checks if everything is correct in newMatch form before enabling its submit button
 $(document).on("change focusout mouseleave" , ".newMatch" , function(){
     var a1 = Number(newMatch.a1.value);
     var a2 = Number(newMatch.a2.value);
@@ -187,6 +192,7 @@ $(document).on("change focusout mouseleave" , ".newMatch" , function(){
     }
 });
 
+// submits newMatch to matches array, adds stats to players objects, saves match to localStorage
 $("#submitMatch").click(function(e){
     var a1 = Number(newMatch.a1.value);
     var a2 = Number(newMatch.a2.value);
@@ -325,6 +331,7 @@ $("#submitMatch").click(function(e){
     document.getElementById("submitMatch").disabled = true;
 });
 
+// adds options to dropdown selectA from players array alphabetically
 $("#selectA").on("focus", function (e){
     $("#selectA").empty();
     if(players.length<2){
@@ -343,6 +350,7 @@ $("#selectA").on("focus", function (e){
     });
 });
 
+// adds options to dropdown selectB from players array alphabetically
 $("#selectB").on("focus", function (e){
     $("#selectB").empty();
     if(players.length<2){
@@ -361,6 +369,7 @@ $("#selectB").on("focus", function (e){
     });
 });
 
+// adds options to dropdown pastA from players array alphabetically
 $("#pastA").on("focus", function (e){
     document.getElementById("pastP").innerHTML = "";
     $("#pastA").empty();
@@ -378,6 +387,7 @@ $("#pastA").on("focus", function (e){
     $("#pastA").prepend("<option value='' selected='selected'></option>");
 });
 
+// adds options to dropdown pastB from players array alphabetically
 $("#pastB").on("focus", function (e){
     document.getElementById("pastP").innerHTML = "";
     $("#pastB").empty();
@@ -395,6 +405,7 @@ $("#pastB").on("focus", function (e){
     $("#pastB").prepend("<option value='' selected='selected'></option>");
 });    
 
+// enables submit button in pastMatches if two different players are selected 
 $(document).on("change" , ".past" , function(){
     var pstA = $("#pastA option:selected").text();
     var pstB = $("#pastB option:selected").text();
@@ -405,6 +416,7 @@ $(document).on("change" , ".past" , function(){
     }
 });
 
+// shows all matches played by selected players in pastMatches 
 $("#submitPair").click(function(e) {
     var psA = $("#pastA option:selected").text();
     var psB = $("#pastB option:selected").text();
@@ -429,6 +441,7 @@ $("#submitPair").click(function(e) {
     }
 });
 
+// enables submit button in playerHistory if player is selected
 $(document).on("change" , ".phis" , function(){
     var ph = $("#player option:selected").text();
     if(ph!==""){
@@ -438,6 +451,7 @@ $(document).on("change" , ".phis" , function(){
     }
 });
 
+// adds options to player dropdown select alphabetically
 $("#player").on("focus", function (e){
     document.getElementById("playerStats").innerHTML = "";
     document.getElementById("playerHis").innerHTML = "";
@@ -456,6 +470,7 @@ $("#player").on("focus", function (e){
     $("#player").prepend("<option value='' selected='selected'></option>");
 });
 
+// shows all matches played by selected player
 $("#submitPlayerHistory").click(function(e) {
     var ph = $("#player option:selected").text();
     var objFilt = matches.filter(function(v){
@@ -483,6 +498,7 @@ $("#submitPlayerHistory").click(function(e) {
     }
 });
 
+// enables gameHistory submit button if game is selected
 $(document).on("change" , ".ghis" , function(){
     var gh = $("#game option:selected").text();
     if(gh!==""){
@@ -492,6 +508,7 @@ $(document).on("change" , ".ghis" , function(){
     }
 });
 
+// adds options to game dropdown select sorted by order of games played
 $("#game").on("focus", function (e){
     document.getElementById("gameHis").innerHTML = "";
     document.getElementById("otherGames").innerHTML = "";
@@ -505,6 +522,7 @@ $("#game").on("focus", function (e){
     $("#game").prepend("<option value='' selected='selected'></option>");
 });
 
+// shows game selected and all games played by two players that participated in it 
 $("#submitGameHistory").click(function(e) {
     var gh = $("#game option:selected").val();
     var clonedMatches = JSON.parse(JSON.stringify(matches));
@@ -543,6 +561,7 @@ $("#submitGameHistory").click(function(e) {
     document.getElementById("submitGameHistory").disabled = true;
 });
 
+// shows all matches history
 $("#matchHistory").on("click", function (e){
     if(allMatches.innerHTML === ""){
         for(a=0;a<matches.length;a++){
@@ -554,6 +573,7 @@ $("#matchHistory").on("click", function (e){
     }
 });
 
+// compares objects on .wins
 function compareWins(p1,p2){
     if (p1.wins < p2.wins)
         return 3;
@@ -562,6 +582,7 @@ function compareWins(p1,p2){
     return 0;
 }
 
+// if .wins are equal, compares objects on difference between wins and losses
 function compareDiff(p1,p2){
     if (p1.wins === p2.wins){
         if (p1.diff < p2.diff)
@@ -572,6 +593,7 @@ function compareDiff(p1,p2){
     }
 }
 
+// if both above conditions are equal compares objects on sets won by the player
 function compareSets(p1,p2){
     if ((p1.wins === p2.wins)&&(p1.diff === p2.diff)){
         if (p1.sets < p2.sets)
@@ -582,6 +604,7 @@ function compareSets(p1,p2){
     }
 }
 
+// shows playerRankings ordered by wins, difference between wins and losses and sets won last
 $("#playerRankings").on("click", function (e){
     players.sort(function(a, b){
         var textA = a.name.toUpperCase();
