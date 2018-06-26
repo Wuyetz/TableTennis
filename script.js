@@ -1,5 +1,8 @@
 window.onload = function(){
 
+var matches = JSON.parse(localStorage.getItem("matches") || "[]");
+var players = JSON.parse(localStorage.getItem("players") || "[]");
+
 const playerName = document.getElementById("playerName");
 const submitPlayer = document.getElementById("submitPlayer");
 const submitMatch = document.getElementById("submitMatch");
@@ -17,8 +20,6 @@ const p2 = document.getElementById("p2");
 const p3 = document.getElementById("p3");
 const p4 = document.getElementById("p4");
 const p5 = document.getElementById("p5");
-var players = [];
-var matches = [];
 
 jQuery(function ($) {
 $("#selectA").trigger("change");
@@ -37,12 +38,13 @@ function Player (n, w, l, s) {
       this.sets = s;
 }
 
-function Match (pA, pB, r, st, or) {
+function Match (pA, pB, r, st, or, dt) {
       this.nameA = pA;
       this.nameB = pB;
       this.result = r;
       this.sets = st;
       this.order = or;
+      this.date = dt;
 }
 
 submitPlayer.addEventListener("click", function() {
@@ -54,6 +56,7 @@ submitPlayer.addEventListener("click", function() {
         }
     }
     players.push(player);
+    localStorage["players"] = JSON.stringify(players);
     document.getElementById("playerName").value = "";
     duplicateNames.innerHTML = "";
     if(players.length>1){
@@ -88,17 +91,6 @@ $(document).on("change focusout mouseleave" , ".newMatch" , function(){
     var p3k = document.getElementById("p3k");
     var p4k = document.getElementById("p4k");
     var p5k = document.getElementById("p5k");
-    
-/*  
-    if(selA===selB){
-        p1.innerHTML ="";
-        p2.innerHTML ="";
-        p3.innerHTML ="";
-        p4.innerHTML ="";
-        p5.innerHTML ="";
-        document.getElementById("submitMatch").disabled = true;
-    }    
-*/
     if(selA!==selB){
         if((((a1-b1)>1||(b1-a1)>1)&&((a1===11||b1===11)))||(((a1-b1)===2||(b1-a1)===2)&&(a1>11||b1>11))){
             if(a1>b1){
@@ -299,9 +291,25 @@ $("#submitMatch").click(function(e){
     var res = String(aPointsFinal)+"-"+String(bPointsFinal);
     var sets = sa1+"-"+sb1+"/"+sa2+"-"+sb2+"/"+sa3+"-"+sb3+"/"+sa4+"-"+sb4+"/"+sa5+"-"+sb5;
     var ord = matches.length;
-    const match = new Match(selA, selB, res, sets, 0);
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1;
+    var yyyy = today.getFullYear();
+    if(dd<10) {
+        dd = "0"+dd;
+    } 
+    if(mm<10) {
+        mm = "0"+mm;
+    } 
+    today = dd+"/"+mm+"/"+yyyy;
+    alert(today);
+    alert(typeof(today));
+    const match = new Match(selA, selB, res, sets, 0, "");
     matches.push(match);
     matches[ord].order = ord+1;
+    matches[ord].date = today;
+    localStorage["matches"] = JSON.stringify(matches);
+    localStorage["players"] = JSON.stringify(players);
     aPointsFinal = 0;
     bPointsFinal = 0;
     document.getElementById("p1").innerHTML = "";
@@ -318,13 +326,6 @@ $("#submitMatch").click(function(e){
     $("#newMatch")[0].reset();
     document.getElementById("submitMatch").disabled = true;
 });
-
-function Match(pA, pB, r, st){
-      this.nameA = pA;
-      this.nameB = pB;
-      this.result = r;
-      this.sets = st;
-}
 
 $("#selectA").on("focus", function (e){
     $("#selectA").empty();
@@ -421,25 +422,22 @@ $("#submitPair").click(function(e) {
         document.getElementById("submitPair").disabled = true;
     }else{
         for(b=0;b<objFiltB.length;b++){
-            document.getElementById("pastP").innerHTML += objFiltB[b].nameA+" vs. "+objFiltB[b].nameB+": "+objFiltB[b].result+
-            " ("+objFiltB[b].sets+")"+"<br>";
+            document.getElementById("pastP").innerHTML += 
+            "GAME: "+objFiltB[b].order+".)  "+objFiltB[b].nameA+" vs. "+objFiltB[b].nameB+
+            "  SCORE: "+objFiltB[b].result+"  SETS: ("+objFiltB[b].sets+")  DATE: "+objFiltB[b].date+"<br>";
         }
     $("#pastMatches")[0].reset();
     document.getElementById("submitPair").disabled = true;
     }
 });
 
-$("#game").on("focus", function (e){
-    document.getElementById("gameHis").innerHTML = "";
-    document.getElementById("otherGames").innerHTML = "";
-    $("#game").empty();
-    matches.forEach(function(item){
-        var option = document.createElement("option");
-        option.value = item.order;
-        option.innerHTML = item.order+". "+item.nameA+"-"+item.nameB;
-        game.appendChild(option);
-    });
-    $("#game").prepend("<option value='' selected='selected'></option>");
+$(document).on("change" , ".phis" , function(){
+    var ph = $("#player option:selected").text();
+    if(ph!==""){
+        document.getElementById("submitPlayerHistory").disabled = false;
+    }else{
+        document.getElementById("submitPlayerHistory").disabled = true;
+    }
 });
 
 $("#player").on("focus", function (e){
@@ -460,24 +458,6 @@ $("#player").on("focus", function (e){
     $("#player").prepend("<option value='' selected='selected'></option>");
 });
 
-$(document).on("change" , ".phis" , function(){
-    var ph = $("#player option:selected").text();
-    if(ph!==""){
-        document.getElementById("submitPlayerHistory").disabled = false;
-    }else{
-        document.getElementById("submitPlayerHistory").disabled = true;
-    }
-});
-
-$(document).on("change" , ".ghis" , function(){
-    var gh = $("#game option:selected").text();
-    if(gh!==""){
-        document.getElementById("submitGameHistory").disabled = false;
-    }else{
-        document.getElementById("submitGameHistory").disabled = true;
-    }
-});
-
 $("#submitPlayerHistory").click(function(e) {
     var ph = $("#player option:selected").text();
     var objFilt = matches.filter(function(v){
@@ -492,16 +472,39 @@ $("#submitPlayerHistory").click(function(e) {
         $("#playerHistory")[0].reset();
         document.getElementById("submitPlayerHistory").disabled = true;
     }else{
-        document.getElementById("playerStats").innerHTML = "Name: "+objFiltPlayer[0].name+" / Wins: "+
-        objFiltPlayer[0].wins+" / Losses: "+
-        objFiltPlayer[0].losses+" / Sets won: "+objFiltPlayer[0].sets;
+        document.getElementById("playerStats").innerHTML = 
+        "NAME: "+objFiltPlayer[0].name+"  WINS: "+objFiltPlayer[0].wins+"  LOSSES: "+
+        objFiltPlayer[0].losses+"  SETS WON: "+objFiltPlayer[0].sets;
         for(b=0;b<objFilt.length;b++){
-            document.getElementById("playerHis").innerHTML += objFilt[b].nameA+" vs. "+objFilt[b].nameB+": "+
-            objFilt[b].result+" ("+objFilt[b].sets+")"+"<br>";
+            document.getElementById("playerHis").innerHTML += 
+            "GAME: "+objFilt[b].order+".) "+objFilt[b].nameA+" vs. "+objFilt[b].nameB+"  SCORE: "+
+            objFilt[b].result+"  SETS: ("+objFilt[b].sets+")  DATE: "+objFilt[b].date+"<br>";
         }
     $("#playerHistory")[0].reset();
     document.getElementById("submitPlayerHistory").disabled = true;
     }
+});
+
+$(document).on("change" , ".ghis" , function(){
+    var gh = $("#game option:selected").text();
+    if(gh!==""){
+        document.getElementById("submitGameHistory").disabled = false;
+    }else{
+        document.getElementById("submitGameHistory").disabled = true;
+    }
+});
+
+$("#game").on("focus", function (e){
+    document.getElementById("gameHis").innerHTML = "";
+    document.getElementById("otherGames").innerHTML = "";
+    $("#game").empty();
+    matches.forEach(function(item){
+        var option = document.createElement("option");
+        option.value = item.order;
+        option.innerHTML = item.order+". "+item.nameA+"-"+item.nameB;
+        game.appendChild(option);
+    });
+    $("#game").prepend("<option value='' selected='selected'></option>");
 });
 
 $("#submitGameHistory").click(function(e) {
@@ -515,8 +518,9 @@ $("#submitGameHistory").click(function(e) {
         $("#gameHistory")[0].reset();
         document.getElementById("submitGameHistory").disabled = true;
     }else{
-        document.getElementById("gameHis").innerHTML = "game "+objFilt[0].order+".) "+objFilt[0].nameA+" vs. "
-        +objFilt[0].nameB+": "+objFilt[0].result+" ("+objFilt[0].sets+")"+"<br>";
+        document.getElementById("gameHis").innerHTML = 
+        "GAME: "+objFilt[0].order+".) "+objFilt[0].nameA+" vs. "+objFilt[0].nameB+
+        "  SCORE: "+objFilt[0].result+"  SETS: ("+objFilt[0].sets+")  DATE: "+objFilt[0].date+"<br>";
         var or = objFilt[0].order;
         var nA = objFilt[0].nameA;
         var nB = objFilt[0].nameB;
@@ -531,12 +535,25 @@ $("#submitGameHistory").click(function(e) {
         });
         document.getElementById("otherGames").innerHTML += "Other games played by this pair of players:"+"<br>";
         for(b=0;b<objFiltC.length;b++){
-            document.getElementById("otherGames").innerHTML += "game "+objFiltC[b].order+".) "+objFiltC[b].nameA+
-            " vs. "+objFiltC[b].nameB+": "+objFiltC[b].result+" ("+objFiltC[b].sets+")"+"<br>";
+            document.getElementById("otherGames").innerHTML += 
+            "GAME "+objFiltC[b].order+".) "+objFiltC[b].nameA+
+            " vs. "+objFiltC[b].nameB+"  SCORE: "+objFiltC[b].result+
+            " SETS: ("+objFiltC[b].sets+")  DATE: "+objFiltC[b].date+"<br>";
         }
     }
     $("#gameHistory")[0].reset();
     document.getElementById("submitGameHistory").disabled = true;
+});
+
+$("#matchHistory").on("click", function (e){
+    if(allMatches.innerHTML === ""){
+        for(a=0;a<matches.length;a++){
+            allMatches.innerHTML += 
+            "GAME: "+matches[a].order+".) "+matches[a].nameA+" vs. "+matches[a].nameB+"  SCORE: "+matches[a].result
+            +"  SETS: ("+matches[a].sets+")  DATE: "+matches[a].date+"<br>";  }
+    }else{
+        allMatches.innerHTML = ""; 
+    }
 });
 
 function compareWins(p1,p2){
@@ -582,22 +599,12 @@ $("#playerRankings").on("click", function (e){
     if(rankings.innerHTML === ""){
         var str = "";
         for(i=0;i<players.length;i++){
-            str+="Rank: "+(i+1)+"  Name: "+players[i].name+"  Wins: "+players[i].wins+"  Losses: "
-            +players[i].losses+" Sets: "+players[i].sets+"<hr>";
+            str+="RANK: "+(i+1)+"  NAME: "+players[i].name+"  WINS: "+players[i].wins+"  LOSSES: "
+            +players[i].losses+" SETS WON: "+players[i].sets+"<hr>";
             rankings.innerHTML = str;
         }
     }else{
         rankings.innerHTML = "";
-    }
-});
-
-$("#matchHistory").on("click", function (e){
-    if(allMatches.innerHTML === ""){
-        for(a=0;a<matches.length;a++){
-            allMatches.innerHTML += matches[a].nameA+" vs. "+matches[a].nameB+"   Score: "+matches[a].result
-            +"   Sets: "+matches[a].sets+"<br>";  }
-    }else{
-        allMatches.innerHTML = ""; 
     }
 });
 
