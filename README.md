@@ -6,6 +6,6 @@ It allows you to enter new players(forbiding duplicates), enter sets and match r
 
 Check notes in javascript file to have a better feeling of how I made it work and see it in action at :
 
-https://wuyetz.github.io/pingpong/ .
+https://wuyetz.github.io/TableTennis/ .
 
 Download it as zip file, extract it to folder of your choosing and click "open with.." on "index" file and choose your internet browser to open it (I tested it on Google Chrome Version 67.0.3396.99 (Official Build) (64-bit))
