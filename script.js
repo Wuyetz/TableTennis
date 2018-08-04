@@ -35,6 +35,10 @@ window.onload = function() {
     // creates new Player object from new playerName input, adds it to players array
     $("#submitPlayer").click(function() {
         const newPlayer = new Player($("#playerName").val(), 0, 0, 0);
+        if($("#playerName").val()===""){
+            $("#duplicateNames").text("Please enter a name!");
+            return;
+        }
         for (i = 0; i < players.length; i++) {
             if (players[i].name === $("#playerName").val()) {
                 $("#duplicateNames").text("That player already exists! Enter a new one!");
