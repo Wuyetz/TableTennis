@@ -62,6 +62,17 @@ window.onload = function() {
         var b3 = Number(newMatch.b3.value);
         var b4 = Number(newMatch.b4.value);
         var b5 = Number(newMatch.b5.value);
+        var a1s = $("#a1s");
+        var a2s = $("#a2s");
+        var a3s = $("#a3s");
+        var a4s = $("#a4s");
+        var a5s = $("#a5s");
+        var b1s = $("#b1s");
+        var b2s = $("#b2s");
+        var b3s = $("#b3s");
+        var b4s = $("#b4s");
+        var b5s = $("#b5s");
+        var sArr = [a1s, a2s, a3s, a4s, a5s, b1s, b2s, b3s, b4s, b5s];
         var selA = $("#selectA option:selected").text();
         var selB = $("#selectB option:selected").text();
         var p1 = $("#p1");
@@ -79,37 +90,45 @@ window.onload = function() {
         var p4k = $("#p4k");
         var p5k = $("#p5k");
 
-        function SetScore(a, b, p, pk) {
+        function SetScore(a, b, p, pk, as, bs) {
             if ((((a - b) > 1 || (b - a) > 1) && ((a === 11 || b === 11))) || (((a - b) === 2 || (b - a) === 2) && (a > 11 || b > 11))) {
                 if (a > b) {
                     p.html(selA + ws);
                     aPoints += 1;
                     pk.html("correct set score");
+                    $(as).css("background-color", "#ffffb3");
                 } else {
                     p.html(selB + ws);
                     bPoints += 1;
                     pk.html("correct set score");
+                    $(bs).css("background-color", "#ffffb3");
                 }
             } else {
                 p.html("");
                 pk.html("");
+                $(as).css("background-color", "white");
+                $(bs).css("background-color", "white");
             }
         }
 
-        if (selA !== selB) {
-            SetScore(a1, b1, p1, p1k);
-            SetScore(a2, b2, p2, p2k);
-            SetScore(a3, b3, p3, p3k);
-            SetScore(a4, b4, p4, p4k);
-            SetScore(a5, b5, p5, p5k);
+
+        if ((selA !== selB) && (selA !== "" && selB !== "")) {
+            SetScore(a1, b1, p1, p1k, a1s, b1s);
+            SetScore(a2, b2, p2, p2k, a2s, b2s);
+            SetScore(a3, b3, p3, p3k, a3s, b3s);
+            SetScore(a4, b4, p4, p4k, a4s, b4s);
+            SetScore(a5, b5, p5, p5k, a5s, b5s);
         } else {
             p1k.html("");
             p2k.html("");
             p3k.html("");
             p4k.html("");
             p5k.html("");
+            for (i = 0; i < sArr.length; i++) {
+                $(sArr[i]).css("background-color", "#ffffff");
+            }
         }
-        if ((aPoints > 2 || bPoints > 2) && ((aPoints < 4) && (bPoints < 4)) && (selA !== selB) && (selA !== "" || selB !== "")) {
+        if ((aPoints > 2 || bPoints > 2) && ((aPoints < 4) && (bPoints < 4)) && (selA !== selB) && (selA !== "" && selB !== "")) {
             if (aPoints > bPoints) {
                 winner.html(selA + " wins this match! Submit it and add another one.");
             } else {
