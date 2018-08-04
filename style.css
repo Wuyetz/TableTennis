@@ -11,6 +11,13 @@ button {
 	border-color: #00cc66;                	
 	border-radius: 10px;                	
 }
+
+button:disabled {
+    	background-color: #b3cccc;
+    	color: #f0f5f5;
+    	border-color: #66ffb3;
+    	border-radius: 10px;    
+}
             		
 select {               	
 	width:150px;               	
@@ -29,5 +36,5 @@ input {
 }
 		    	
 #winner {               	
-font-weight: bold;                	
+	font-weight: bold;                	
 }
